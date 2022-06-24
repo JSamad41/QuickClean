@@ -1,0 +1,78 @@
+﻿@using System.Web.Optimization;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://kit.fontawesome.com/a75ff89abd.js" crossorigin="anonymous"></script>
+    @Styles.Render("~/Content/css")
+
+    <style>
+
+        .topnav {
+            overflow: hidden;
+            background-color: #bfe5d9;
+        }
+
+            .topnav a {
+                float: right;
+                color: #333;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #5aa17f;
+                    color: white;
+                }
+
+                .topnav a.active {
+                    background-color: #04AA6D;
+                    color: white;
+                }
+
+        .topname {
+            overflow: hidden;
+            background-color: #bfe5d9;
+        }
+    </style>
+
+</head>
+<body>
+
+    @{
+        web2.Models.User uCurrent = new web2.Models.User();
+        uCurrent = uCurrent.GetUserSession();
+    }
+
+    <div class="topnav">
+
+        <a href="~/AboutUs/Index" title="For More Information">More Information</a>
+
+
+        @if (uCurrent.IsAuthenticated)
+        { // already logged in
+            <a href="~/Profile/SignOut" title="Sign Out">Sign Out</a>
+            <a href="~/Profile/Index" title="Profile">Profile</a>
+        }
+        else
+        { // not logged in
+            <a href="~/Profile/SignUp" title="Sign Up">Sign Up</a>
+            <a href="~/Profile/SignIn" title="Sign In">Login</a>
+        }
+
+        <a href="~/Home/Index" title="Home">Home</a>
+
+        <a style="padding: 5px 5px;float: left; font-size: 35px; font-weight: 700; font-family: 'Copperplate Gothic'">Quick Clean</a>
+
+    </div>
+
+        <div id="workspace">
+            @RenderBody()
+        </div>
+        @RenderSection("Scripts", required: false)
+</body>
+</html>
