@@ -1,7 +1,7 @@
 ﻿@model web2.Models.HomeContent
 
 @{
-    ViewBag.Title = "Home - Welcome";
+    ViewBag.Title = "Current Properties ";
 }
 <style>
     .user-image-container {
@@ -71,7 +71,7 @@ else
 {
     <div>
         @foreach (web2.Models.Property e in Model.Properties)
-        {
+         {
             <div id="image-@e.ID" class="user-image-container">
                 @if (e.PropertyImage != null)
                 {
@@ -80,50 +80,14 @@ else
 								e.PropertyImage.FileExtension, ";base64,",
 								e.PropertyImage.BytesBase64)" />
                     </a>
-                }
+                 }
                 <div class="property-thumbnail">
-                    <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Title</a></div>
-                    @if (e.Start.Date == e.End.Date)
-                    {//The property starts and ends on the same day
-                        <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
-                        <div class="property-date">@e.Start.ToShortTimeString() to @e.End.ToShortTimeString()</div>
-                    }
-                    <div>
-                        @if (Model.User.IsAuthenticated)
-                        {
-                            if (e.User.UID == Model.User.UID)
-                            {
-                                <i class="fal fa-thumbs-up" title="This is your property. Like is disabled."></i> <span class="disabled-spacing">(<label id="like-count-@e.ID">@e.TotalLikes</label>)</span>
-                            }
-                            else
-                            {
-                                string strLikeClass = "fal"; //this is the "not currently liked" class
-                                if (Model.User.DoesUserLike(web2.Models.Like.Types.Property, e.ID))
-                                {
-                                    strLikeClass = "fas"; //this is the "like" class
-                                }
-                                <a class="like-link" id="like-user-a-@e.ID" href="javascript:void(0);" onclick="togglePropertyLike('index', @Model.User.UID, @e.ID);">
-                                    <i id="like-user-i-@e.ID" class="mycanvas-follow @strLikeClass fa-thumbs-up"></i> <span style="font-size: 0.8em;">(<label id="like-count-@e.ID">@e.TotalLikes</label>)</span>
-                                </a>
-                            }
-                        }
-                        @{
-                            string[] rates = new string[5];
-                            if (e.AverageRating > 0) { rates[0] = "checked"; }
-                            if (e.AverageRating > 1) { rates[1] = "checked"; }
-                            if (e.AverageRating > 2) { rates[2] = "checked"; }
-                            if (e.AverageRating > 3) { rates[3] = "checked"; }
-                            if (e.AverageRating > 4) { rates[4] = "checked"; }
-                        }
-                        <span id="rate1" class="fa fa-star @rates[0] rate-star"></span>
-                        <span id="rate2" class="fa fa-star @rates[1] rate-star"></span>
-                        <span id="rate3" class="fa fa-star @rates[2] rate-star"></span>
-                        <span id="rate4" class="fa fa-star @rates[3] rate-star"></span>
-                        <span id="rate5" class="fa fa-star @rates[4] rate-star"></span>
-                    </div>
+                    <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Location.Address.Address1</a></div>
+                    <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
                 </div>
             </div>
-        }
+                   
+         }
     </div>
 }
 <script>

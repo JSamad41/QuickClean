@@ -132,6 +132,18 @@ namespace web2.Models {
 						e.squareFootage = (string)dr["squareFootage"];
 						e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
 						e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
+						
+						if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
+						if (dr["deepCleaning"].ToString() == "N") e.deepCleaning = false;
+
+						if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false;
+						if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false;
+						if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false;
+						if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false;
+
+						e.Details = (string)dr["Details"];
+						e.Compensation = (string)dr["Compensation"];
+
 						e.Location = new Location();
 						//e.Location.Title = (string)dr["LocationTitle"];
 						//e.Location.Description = (string)dr["LocationDesc"];
@@ -295,9 +307,42 @@ namespace web2.Models {
 				SetParameter(ref cm, "@city", e.Location.Address.City, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@state", e.Location.Address.State, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@zip", e.Location.Address.Zip, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@squareFootage", e.Location.Address.Zip, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBedrooms", e.Location.Address.Zip, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBathrooms", e.Location.Address.Zip, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
+
+				if (e.standardCleaning)
+					SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
+
+				if (e.deepCleaning)
+					SetParameter(ref cm, "@deepCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@deepCleaning", "N", SqlDbType.Char);
+
+				if (e.carpetCleaning)
+					SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
+				
+				if (e.baseboardCleaning)
+					SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
+				
+				if (e.laundryCleaning)
+					SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
+				
+				if (e.dishCleaning)
+					SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
+
 
 				if (e.IsActive)
 					SetParameter(ref cm, "@is_active", "Y", SqlDbType.Char);
@@ -409,6 +454,21 @@ namespace web2.Models {
 
 						if (dr["IsActive"].ToString() == "N") e.IsActive = false;
 
+						e.squareFootage = (string)dr["squareFootage"];
+						e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
+						e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
+
+						if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
+						if (dr["deepCleaning"].ToString() == "N") e.deepCleaning = false;
+
+						if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false;
+						if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false;
+						if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false;
+						if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false;
+
+						e.Details = (string)dr["Details"];
+						e.Compensation = (string)dr["Compensation"];
+
 						//e.TotalLikes = (int)dr["TotalLikes"];
 						e.Location = new Location();
 						//e.Location.Title = (string)dr["LocationTitle"];
@@ -420,10 +480,6 @@ namespace web2.Models {
 						e.Location.Address.City = (string)dr["City"];
 						e.Location.Address.State = (string)dr["State"];
 						e.Location.Address.Zip = (string)dr["Zip"];
-
-						e.squareFootage = (string)dr["squareFootage"];
-						e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
-						e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
 
 						e.User = new User();
 						e.User.UID = (long)dr["UID"];
@@ -499,6 +555,39 @@ namespace web2.Models {
 				SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
+
+				SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
+
+				if (e.standardCleaning)
+					SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
+
+				if (e.deepCleaning)
+					SetParameter(ref cm, "@deepCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@deepCleaning", "N", SqlDbType.Char);
+
+				if (e.carpetCleaning)
+					SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
+
+				if (e.baseboardCleaning)
+					SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
+
+				if (e.laundryCleaning)
+					SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
+
+				if (e.dishCleaning)
+					SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
 
 				if (e.IsActive)
 					SetParameter(ref cm, "@is_active", "Y", SqlDbType.Char);

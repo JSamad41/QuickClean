@@ -63,17 +63,27 @@ namespace web2.Controllers
 				if (RouteData.Values["id"] != null) e.ID = Convert.ToInt64(RouteData.Values["id"]);
 				e.User = u;
 				e.Title = col["Title"];
-				//if (col["IsActive"].ToString().Contains("true")) e.IsActive = true; else e.IsActive = false;
-				e.Description = col["Description"];
-
+				if (col["IsActive"].ToString().Contains("true")) e.IsActive = true; else e.IsActive = false;
 				e.Start = DateTime.Parse(string.Concat(col["Start"].ToString(), " ", col["Start.TimeOfDay"]));
 				//e.End = DateTime.Parse(string.Concat(col["End"].ToString(), " ", col["End.TimeOfDay"]));
 
 				e.squareFootage = col["squareFootage"];
 				e.numberOfBedrooms = col["numberOfBedrooms"];
 				e.numberOfBathrooms = col["numberOfBathrooms"];
+				e.numberOfBathrooms = col["numberOfBathrooms"];
+				e.numberOfBathrooms = col["numberOfBathrooms"];
+				e.numberOfBathrooms = col["numberOfBathrooms"];
 
+				if (col["standardCleaning"].ToString().Contains("true")) e.standardCleaning = true; else e.standardCleaning = false;
+				if (col["deepCleaning"].ToString().Contains("true")) e.deepCleaning = true; else e.deepCleaning = false;
 
+				if (col["carpetCleaning"].ToString().Contains("true")) e.carpetCleaning = true; else e.carpetCleaning = false;
+				if (col["baseboardCleaning"].ToString().Contains("true")) e.baseboardCleaning = true; else e.baseboardCleaning = false;
+				if (col["laundryCleaning"].ToString().Contains("true")) e.laundryCleaning = true; else e.laundryCleaning = false;
+				if (col["dishCleaning"].ToString().Contains("true")) e.dishCleaning = true; else e.dishCleaning = false;
+
+				e.Details = col["Details"];
+				e.Compensation = col["Compensation"];
 
 				e.Location = new Models.Location();
 				e.Location.Title = col["Location.Title"];
