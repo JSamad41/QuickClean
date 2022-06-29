@@ -1,0 +1,176 @@
+﻿@model web2.Models.Property
+
+@{
+    ViewBag.Title = string.Concat("Property Details", @Model.Title);
+}
+
+@if (!Model.User.IsAuthenticated)
+{
+    @Html.Partial("NotAuthenticated")
+}
+else
+{
+    string strHeader = ViewBag.Title;
+    string strText = "To make changes to your listing enter your information below and click the Update button.";
+    if (Model.ID == 0)
+    {
+        strHeader = "New Listing";
+        strText = "Enter the information for this listing and click the Save button.";
+    }
+
+    <h2>@strHeader</h2>
+    @Html.Partial("UserTabMenu")
+    <p>@strText</p>
+    if (Model.ActionType == web2.Models.Property.ActionTypes.RequiredFieldsMissing)
+    {
+        <div id="content-locked">
+            <i class="fad fa-exclamation-triangle fa-2x"></i>
+            <span>Property clean date, description, and address are required.</span>
+        </div>
+    }
+
+    using (Html.BeginForm("Property", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input id="query-string-from" name="query-string-from" type="hidden" value="@Request.QueryString["from"]" />
+        <div id="user-profile-image">
+            @if (Model.PropertyImage != null)
+            {
+                if (Model.PropertyImage.ImageID > 0)
+                {
+                    <div class="user-profile-image-container">
+                        <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+							Model.PropertyImage.FileExtension, ";base64,",
+							Model.PropertyImage.BytesBase64)" />
+                    </div>
+                }
+            }
+        </div>
+        <div id="user-profile-data">
+            @Html.TextBoxFor(model => model.PropertyImage.ImageID, new { style = "display: none;" })
+
+            <div class="section">
+                <button class="button-action" id="btnUpdate2" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
+                @if (Model.ID > 0)
+                { //don't show the delete unless this Property has already been saved to the database
+                    <button class="button-cancel" id="btnDelete2" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
+                }
+                <button class="button-cancel" id="btnClose2" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+            </div>
+
+            <div class="section">
+                <div class="section">
+                    <div>Property Image(s)</div>
+                    <div>
+                        <input class="profile-item" type="file" name="PropertyImage" id="PropertyImage" />
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div>&nbsp;</div>
+                <div>@Html.CheckBoxFor(model => model.IsActive) @Html.LabelFor(model => model.IsActive, "Is Active")</div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Start, "Start Date")</div>
+                    <div>@Html.TextBoxFor(model => model.Start, "{0:yyyy-MM-dd}", new { @class = "field-width3", @type = "date" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Start.TimeOfDay, "Start Time")</div>
+                    <div>@Html.TextBoxFor(model => model.Start.TimeOfDay, new { @class = "field-width3", @type = "time" })</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Location.Address.Address1)</div>
+                    <div>@Html.TextBoxFor(model => model.Location.Address.Address1, new { @class = "field-width3" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Location.Address.Address2)</div>
+                    <div>@Html.TextBoxFor(model => model.Location.Address.Address2, new { @class = "field-width3" })</div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Location.Address.City)</div>
+                    <div>@Html.TextBoxFor(model => model.Location.Address.City, new { @class = "field-width4" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Location.Address.State)</div>
+                    <div>@Html.TextBoxFor(model => model.Location.Address.State, new { @class = "field-width4" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Location.Address.Zip)</div>
+                    <div>@Html.TextBoxFor(model => model.Location.Address.Zip, new { @class = "field-width4" })</div>
+                </div>
+            </div>
+
+            <div style="font-weight:bold">Property Specifics:</div>
+
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.squareFootage, "Square Footage")</div>
+                    <div>@Html.TextBoxFor(model => model.squareFootage, new { @class = "field-width4" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
+                    <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
+                    <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
+                </div>
+            </div>
+
+            <div style="font-weight:bold">Extras:</div>
+            <div class="section">
+                <div class="item">
+                    <div>&nbsp;</div>
+                    <div>@Html.CheckBoxFor(model => model.carpetCleaning) @Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
+                </div>
+                <div class="item">
+                    <div>&nbsp;</div>
+                    <div>@Html.CheckBoxFor(model => model.baseboardCleaning) @Html.LabelFor(model => model.baseboardCleaning, "Baseboard Cleaning")</div>
+                </div>
+                <div class="item">
+                    <div>&nbsp;</div>
+                    <div>@Html.CheckBoxFor(model => model.laundryCleaning) @Html.LabelFor(model => model.laundryCleaning, "Laundry")</div>
+                </div>
+                <div class="item">
+                    <div>&nbsp;</div>
+                    <div>@Html.CheckBoxFor(model => model.dishCleaning) @Html.LabelFor(model => model.dishCleaning, "Dish Cleaning")</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Details)</div>
+                    <div>@Html.TextAreaFor(model => model.Details, new { @class = "field-width1", @rows = "4" })</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Compensation)</div>
+                    <div>$@Html.TextBoxFor(model => model.Compensation, new { @class = "field-width5" })USD</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
+                @if (Model.ID > 0)
+                { //don't show the delete unless this Property has already been saved to the database
+                    <button class="button-cancel" id="btnDelete" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
+                }
+                <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+            </div>
+        </div>
+
+    }
+}
+
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'properties');
+    });
+</script>

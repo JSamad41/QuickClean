@@ -1,0 +1,134 @@
+﻿@model web2.Models.HomeContent
+
+@{
+    ViewBag.Title = "Home - Welcome";
+}
+<style>
+    .user-image-container {
+        height: 225px;
+    }
+
+    .property-thumbnail {
+        margin: 0.25em;
+    }
+
+    .property-link {
+        font-weight: bold;
+        font-size: 0.8em;
+        margin-bottom: 0.3em;
+    }
+
+    .property-date {
+        font-size: 0.8em;
+        margin-bottom: 0.3em;
+    }
+
+    .in-active {
+        background-color: lightgrey;
+    }
+
+    .like {
+        color: #4CAF50;
+    }
+
+    .mycanvas-follow {
+        color: #4CAF50;
+    }
+
+    .mycanvas-following {
+        color: #4CAF50;
+    }
+
+    .web2-like {
+        color: #4CAF50;
+    }
+
+    .like-link:hover {
+        cursor: pointer;
+    }
+
+    .like-link {
+        text-decoration: none;
+        margin-right: 0.75em;
+    }
+
+    .disabled-spacing {
+        margin-right: 0.75em;
+        font-size: 0.8em;
+    }
+
+    .your-item {
+        color: darkgrey
+    }
+</style>
+
+<h2>@ViewBag.Title</h2>
+@if (Model.Properties.Count == 0)
+{
+    <p>No properties listed at this time.</p>
+}
+else
+{
+    <div>
+        @foreach (web2.Models.Property e in Model.Properties)
+        {
+            <div id="image-@e.ID" class="user-image-container">
+                @if (e.PropertyImage != null)
+                {
+                    <a href="@Url.Action("Property", new { id = e.ID })">
+                        <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+								e.PropertyImage.FileExtension, ";base64,",
+								e.PropertyImage.BytesBase64)" />
+                    </a>
+                }
+                <div class="property-thumbnail">
+                    <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Title</a></div>
+                    @if (e.Start.Date == e.End.Date)
+                    {//The property starts and ends on the same day
+                        <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
+                        <div class="property-date">@e.Start.ToShortTimeString() to @e.End.ToShortTimeString()</div>
+                    }
+                    <div>
+                        @if (Model.User.IsAuthenticated)
+                        {
+                            if (e.User.UID == Model.User.UID)
+                            {
+                                <i class="fal fa-thumbs-up" title="This is your property. Like is disabled."></i> <span class="disabled-spacing">(<label id="like-count-@e.ID">@e.TotalLikes</label>)</span>
+                            }
+                            else
+                            {
+                                string strLikeClass = "fal"; //this is the "not currently liked" class
+                                if (Model.User.DoesUserLike(web2.Models.Like.Types.Property, e.ID))
+                                {
+                                    strLikeClass = "fas"; //this is the "like" class
+                                }
+                                <a class="like-link" id="like-user-a-@e.ID" href="javascript:void(0);" onclick="togglePropertyLike('index', @Model.User.UID, @e.ID);">
+                                    <i id="like-user-i-@e.ID" class="mycanvas-follow @strLikeClass fa-thumbs-up"></i> <span style="font-size: 0.8em;">(<label id="like-count-@e.ID">@e.TotalLikes</label>)</span>
+                                </a>
+                            }
+                        }
+                        @{
+                            string[] rates = new string[5];
+                            if (e.AverageRating > 0) { rates[0] = "checked"; }
+                            if (e.AverageRating > 1) { rates[1] = "checked"; }
+                            if (e.AverageRating > 2) { rates[2] = "checked"; }
+                            if (e.AverageRating > 3) { rates[3] = "checked"; }
+                            if (e.AverageRating > 4) { rates[4] = "checked"; }
+                        }
+                        <span id="rate1" class="fa fa-star @rates[0] rate-star"></span>
+                        <span id="rate2" class="fa fa-star @rates[1] rate-star"></span>
+                        <span id="rate3" class="fa fa-star @rates[2] rate-star"></span>
+                        <span id="rate4" class="fa fa-star @rates[3] rate-star"></span>
+                        <span id="rate5" class="fa fa-star @rates[4] rate-star"></span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('home');
+    });
+</script>
+

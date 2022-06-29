@@ -1,0 +1,82 @@
+﻿@model web2.Models.User
+@{
+    ViewBag.Title = "MyProperties";
+}
+
+<style>
+    .user-image-container {
+        height: 225px;
+    }
+
+    .property-thumbnail {
+        margin: 0.25em;
+    }
+
+    .property-link {
+        font-weight: bold;
+        font-size: 0.8em;
+        margin-bottom: 0.2em;
+    }
+
+    .property-date {
+        font-size: 0.8em;
+        margin-bottom: 0.2em;
+    }
+
+    .in-active {
+        background-color: lightgrey;
+    }
+</style>
+
+<h2>@ViewBag.Title</h2>
+@if (!Model.IsAuthenticated)
+{
+    @Html.Partial("NotAuthenticated")
+}
+else
+{
+    @Html.Partial("UserTabMenu")
+
+    if (Model.Properties.Count == 0)
+    {
+        <p>You have no properties listed. Click the <i>Add Property Listing</i> link from the menu above to add a new property.</p>
+    }
+    else
+    {
+        <div>
+            @foreach (web2.Models.Property e in Model.Properties)
+            {
+                <div id="image-@e.ID" class="user-image-container @(!e.IsActive ? "in-active":"")">
+                    @if (e.PropertyImage != null)
+                    {
+                        <a href="@Url.Action("Property", new { id = e.ID })">
+                            <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+								e.PropertyImage.FileExtension, ";base64,",
+								e.PropertyImage.BytesBase64)" />
+                        </a>
+                    }
+
+                <div class="property-thumbnail">
+                    <div class="item">
+                        <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Location.Address.Address1</a></div>
+                    </div>
+                    <div class="item">
+                        <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
+                    </div>
+                    @*@if (e.Start.Date == e.End.Date)
+        {//The property starts and ends on the same day
+            <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
+            <div class="property-date">@e.Start.ToShortTimeString() to @e.End.ToShortTimeString()</div>
+        }*@
+                </div>
+                </div>
+            }
+        </div>
+    }
+}
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'properties');
+    });
+</script>
+

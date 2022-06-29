@@ -1,0 +1,34 @@
+﻿
+<div id="user-tab-menu" class="tab">
+    <button id="profile-properties" class="tablinks" onclick="location.href = '@Url.Action("MyProperties", "Profile")';"><i class="fas fa-calendar-alt"></i> My Property Listings</button>
+    @{
+        string strController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+        string strView = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+        long lngID = 0;
+        if (HttpContext.Current.Request.RequestContext.RouteData.Values["id"] != null)
+        {
+            lngID = Convert.ToInt64(HttpContext.Current.Request.RequestContext.RouteData.Values["id"]);
+        }
+    }
+    @if (strController == "Profile" && strView == "MyProperties")
+    {
+        <button id="profile-new-property" class="tablinks" onclick="location.href = '@Url.Action("Property", "Profile")';">
+            <i class="far fa-plus-circle"></i> 
+            <span class="full-content" title="Add a new property">Add Property Listing</span>
+            <span class="mobile-content" title="Add a new property">Add</span></button>
+    }
+
+
+    @if (strController == "Profile" && strView == "Property" && lngID > 0)
+    {
+        <button id="profile-property-gallery" class="tablinks" onclick="location.href = '@Url.Action("PropertyGallery", "Profile", new { @id = lngID })';"><i class="fal fa-images"></i> Property Images</button>
+    }
+
+    @if (strController == "Profile" && strView == "PropertyGallery" && lngID > 0)
+    {
+        <button id="profile-property" class="tablinks" onclick="location.href = '@Url.Action("Property", "Profile", new { @id = lngID })';"><i class="fas fa-calendar-day"></i>Property</button>
+    }
+
+    <button id="profile-index" class="tablinks" onclick="location.href = '@Url.Action("Index", "Profile")';"><i class="fas fa-user-circle"></i> Profile</button>
+</div>
+
