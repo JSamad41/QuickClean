@@ -1,90 +1,58 @@
-﻿@model web2.Models.User
+﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Home - Welcome";
 }
-<h2>Profile Information</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-image: url(/Content/Image/cleaning-house-1520528100.jpg);
+            background-size: cover;
+        }
 
-<style>
+        .btn {
+            border: solid;
+            border-color: #888888;
+            background-color: #e8e8e8;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
 
-</style>
+        /* Gray */
+        .default {
+            color: black;
+        }
 
-@if (!Model.IsAuthenticated)
-{
-    @Html.Partial("NotAuthenticated")
-}
-else
-{
-    @Html.Partial("UserTabMenu")
-    using (Html.BeginForm("Index", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <p>To make changes to your profile enter your information below and click the Update button.</p>
+            .default:hover {
+                background: #787878;
+            }
+    </style>
+</head>
+<body>
 
-        <div id="user-profile-data">
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.FirstName)</div>
-                    <div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.LastName)</div>
-                    <div>@Html.TextBoxFor(model => model.LastName)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Address)</div>
-                    <div>@Html.TextBoxFor(model => model.Address)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.City)</div>
-                    <div>@Html.TextBoxFor(model => model.City)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.State)</div>
-                    <div>@Html.TextBoxFor(model => model.State)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Zip)</div>
-                    <div>@Html.TextBoxFor(model => model.Zip)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.PhoneNumber)</div>
-                    <div>@Html.TextBoxFor(model => model.PhoneNumber)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Email)</div>
-                    <div>@Html.TextBoxFor(model => model.Email)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.UserID)</div>
-                    <div>@Html.TextBoxFor(model => model.UserID)</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Password)</div>
-                    <div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
-                </div>
-            </div>
-            <div class="section">
-                <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
-            </div>
-        </div>
-                    }
-                    }
+    <div style="padding-left:36px;padding-top:100px">
+        <p style="font-size:35px;font-weight:550;font-family:Fantasty, Impact">A trusted site connecting cleaning</p>
+        <p style="font-size:35px;font-weight:550;font-family:Fantasty, Impact">professionals and clients.</p>
+    </div>
 
-                    <script>
-                        $(document).ready(function () {
-                            SetActiveMenus('profile', 'index');
-                        });
-                    </script>
+    <div style="padding-left: 35px">
+        <input type="text" id="search" name="search" placeholder="Search for Cleaners or Clients" style="width:0%;border:inset;padding: 14px 28px;">
+        <button class="btn default">Go</button>
+    </div>
+    <div style="padding-left: 35px;padding-top:50px">
+        <a href="~/Home/Properties" title="CurrentProperties">Click Here to View Current Properties</a>
+    </div>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('home');
+    });
+</script>
