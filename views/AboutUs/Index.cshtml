@@ -1,1 +1,28 @@
+﻿@model web2.Models.User
+@{
+    ViewBag.Title = "About Us";
+}
+<style>.user-image-container {height: unset;}</style>
 
+<h3>@ViewBag.Title</h3>
+
+<p>Thanks for using our website. </p>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    
+        @*<div style="font-size:smaller">
+            <a href="mailto:@Model.Email?subject=Quick Clean"> @Model.Email</a>
+        </div>*@
+
+    <div class="section">
+        <button id="btnSubmit" name="btnSubmit" value="more" class="button-action"><i class="far fa-info-circle"></i> More</button>
+        <button class="button-cancel" id="btnClose" name="btnClose" value="close"><i class='fa fa-times'></i> Close</button>
+
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('AboutUs');
+    });
+</script>

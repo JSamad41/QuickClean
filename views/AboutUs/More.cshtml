@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "More About Us";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<p></p>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+
+    <div class="section">
+        <button class="button-cancel" id="btnClose" name="btnClose" value="close"><i class='fa fa-times'></i> Close</button>
+    </div>
+}
+<script>
+	$(document).ready(function () {
+		SetActiveMenus('aboutus');
+	});
+</script>
