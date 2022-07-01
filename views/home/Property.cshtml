@@ -1,188 +1,197 @@
-﻿@model web2.Models.Property
+﻿
+@model web2.Models.PropertyContent
 
 @{
-    ViewBag.Title = string.Concat("Property Details", @Model.Title);
+    ViewBag.Title = @Model.Property.Title;
 }
-
-@if (!Model.User.IsAuthenticated)
-{
-    @Html.Partial("NotAuthenticated")
-}
-else
-{
-    string strHeader = ViewBag.Title;
-    string strText = "To make changes to your listing enter your information below and click the Update button.";
-    if (Model.ID == 0)
-    {
-        strHeader = "New Listing";
-        strText = "Enter the information for this listing and click the Save button.";
+<style>
+    .mycanvas-follow {
+        color: #4CAF50;
     }
 
-    <h2>@strHeader</h2>
-    @Html.Partial("UserTabMenu")
-    <p>@strText</p>
-    if (Model.ActionType == web2.Models.Property.ActionTypes.RequiredFieldsMissing)
-    {
-        <div id="content-locked">
-            <i class="fad fa-exclamation-triangle fa-2x"></i>
-            <span>Property clean date, description, and address are required.</span>
-        </div>
+    .like-link:hover {
+        cursor: pointer;
     }
 
-    using (Html.BeginForm("Property", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    .like-link {
+        text-decoration: none;
+        margin-right: 0.75em;
+    }
+
+    .rate-star:hover {
+        cursor: pointer;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+	#report-ellipsis { vertical-align:middle; margin-left: 1em; }
+
+	#report-panel {
+		display: none;
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+		padding-top: 0.25em;
+		padding-bottom: 0.25em;
+		padding-left: 0.75em;
+		padding-right: 0.75em;
+		background-color: lightyellow;
+		border: 1px solid darkgrey;
+		-webkit-border-radius: 0.3em;
+		-moz-border-radius: 0.3em;
+		border-radius: 0.3em;
+	}
+
+	#report-close { color: black; float: right; font-size: 28px; font-weight: bold; padding-top: 0.25em; margin-left: 0.25em;}
+	#report-close:hover, #report-ellipsis:hover { color: red; text-decoration: none; cursor: pointer; }
+	#report-submitting, #report-submitted, #report-failed { display: none; }
+	#report-failed { color: red; }
+	.margin-right { margin-right: 0.25em; }
+	#fa-report-icon { color: red;}
+
+
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+<div id="user-profile-image">
+    @if (Model.Property.PropertyImage != null)
     {
-        <input id="query-string-from" name="query-string-from" type="hidden" value="@Request.QueryString["from"]" />
-        <div id="user-profile-image">
-            @if (Model.PropertyImage != null)
-            {
-                if (Model.PropertyImage.ImageID > 0)
-                {
-                    <div class="user-profile-image-container">
-                        <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
-							Model.PropertyImage.FileExtension, ";base64,",
-							Model.PropertyImage.BytesBase64)" />
+        if (Model.Property.PropertyImage.ImageID > 0)
+        {
+            <div class="user-profile-image-container">
+                <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+							Model.Property.PropertyImage.FileExtension, ";base64,",
+							Model.Property.PropertyImage.BytesBase64)" />
+            </div>
+        }
+    }
+</div>
+
+<div id="user-profile-data">
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+
+
+<div class="section">
+            <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+            
+            @if (Model.User.IsAuthenticated) { 
+                <span id="report-ellipsis" title="Report"><i class="far fa-ellipsis-v fa-2x ellipsis"></i></span>
+                <div id="report-panel">
+                    <div id="report-content">
+                        <p>
+                            <i id="fa-report-icon" class="fas fa-info-circle fa-2x margin-right"></i>
+                            Report this as:
+                            <select id="report-list" name="lstReport">
+                                <option value="0">(select)</option>
+                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.MissleadingorScam)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.MissleadingorScam)</option>
+                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Offensive)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Offensive)</option>
+                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.SexuallyInappropriate)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.SexuallyInappropriate)</option>
+                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Spam)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Spam)</option>
+                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Violent)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Violent)</option>
+                            </select>
+                            <span id="report-close" title="Close this panel">&times;</span>
+                        </p>
+                        <span id="report-submitting"><i ckass="fas fa-spinner fa-spin fa-2x margin-right"></i> Submitting report...</span>
                     </div>
-                }
-            }
+                    <div id="report-submitted"><p><i class="fal fa-check fa-2x margin-right"></i> Report Submitted.</p></div>
+                    <div id="report-failed"><p><i class="far fa-exclamation-triangle fa-2x margin-right"></i> Report failed. Try again later.</p></div>
+                </div>
+    }
         </div>
-        <div id="user-profile-data">
-            @Html.TextBoxFor(model => model.PropertyImage.ImageID, new { style = "display: none;" })
 
+        if (Model.User.IsAuthenticated)
+        {
             <div class="section">
-                <button class="button-action" id="btnUpdate2" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
-                @if (Model.ID > 0)
-                { //don't show the delete unless this Property has already been saved to the database
-                    <button class="button-cancel" id="btnDelete2" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
-                }
-                <button class="button-cancel" id="btnClose2" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
-            </div>
+                <div>
+                    @{
+                        string strLikeClass = "fal"; //this is the "not currently liked" class
+                        if (Model.User.UID == Model.Property.User.UID)
+                        {
+                            <i class="fal fa-thumbs-up" title="This is your property. Like is disabled."></i> <span style="font-size: 0.8em;">(<label id="like-count-@Model.Property.ID">@Model.Property.TotalLikes</label>)</span>
+                        }
+                        else
+                        {
+                            if (Model.User.DoesUserLike(web2.Models.Like.Types.Property, Model.Property.ID))
+                            {
+                                strLikeClass = "fas"; //this is the "like" class
+                            }
+                            <a class="like-link" id="like-user-a-@Model.Property.ID" href="javascript:void(0);" onclick="togglePropertyLike('property', @Model.User.UID, @Model.Property.ID);">
+                                <i id="like-user-i-@Model.Property.ID" class="mycanvas-follow @strLikeClass fa-thumbs-up"></i> <span style="font-size: 0.8em;">(<label id="like-count-@Model.Property.ID">@Model.Property.TotalLikes</label>)</span>
+                            </a>
+                        }
 
-            <div class="section">
-                <div class="section">
-                    <div>Property Image(s)</div>
-                    <div>
-                        <input class="profile-item" type="file" name="PropertyImage" id="PropertyImage" />
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div>&nbsp;</div>
-                <div>@Html.CheckBoxFor(model => model.IsActive) @Html.LabelFor(model => model.IsActive, "Is Active")</div>
-            </div>
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Start, "Start Date")</div>
-                    <div>@Html.TextBoxFor(model => model.Start, "{0:yyyy-MM-dd}", new { @class = "field-width3", @type = "date" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Start.TimeOfDay, "Start Time")</div>
-                    <div>@Html.TextBoxFor(model => model.Start.TimeOfDay, new { @class = "field-width3", @type = "time" })</div>
-                </div>
-            </div>
+                        byte rate = Model.User.GetUserRating(web2.Models.Rating.Types.Property, Model.Property.ID);
 
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Location.Address.Address1)</div>
-                    <div>@Html.TextBoxFor(model => model.Location.Address.Address1, new { @class = "field-width3" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Location.Address.Address2)</div>
-                    <div>@Html.TextBoxFor(model => model.Location.Address.Address2, new { @class = "field-width3" })</div>
-                </div>
-            </div>
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Location.Address.City)</div>
-                    <div>@Html.TextBoxFor(model => model.Location.Address.City, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Location.Address.State)</div>
-                    <div>@Html.TextBoxFor(model => model.Location.Address.State, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Location.Address.Zip)</div>
-                    <div>@Html.TextBoxFor(model => model.Location.Address.Zip, new { @class = "field-width4" })</div>
-                </div>
-            </div>
-
-            <div style="font-weight:bold">Property Specifics:</div>
-
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.squareFootage, "Square Footage")</div>
-                    <div>@Html.TextBoxFor(model => model.squareFootage, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
-                    <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
-                    <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
-                </div>
-            </div>
-
-            <div style="font-weight:bold">Type of Cleaning:</div>
-            <div class="section">
-                <div class="item">
-                    <div>&nbsp;</div>
-                    <div>@Html.CheckBoxFor(model => model.standardCleaning) @Html.LabelFor(model => model.standardCleaning, "Standard Cleaning")</div>
-                </div>
-                <div class="item">
-                    <div>&nbsp;</div>
-                    <div>@Html.CheckBoxFor(model => model.deepCleaning) @Html.LabelFor(model => model.deepCleaning, "Deep Cleaning")</div>
-                </div>
-            </div>
-
-                <div style="font-weight:bold">Extras:</div>
-                <div class="section">
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.carpetCleaning) @Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.baseboardCleaning) @Html.LabelFor(model => model.baseboardCleaning, "Baseboard Cleaning")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.laundryCleaning) @Html.LabelFor(model => model.laundryCleaning, "Laundry")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.dishCleaning) @Html.LabelFor(model => model.dishCleaning, "Dish Cleaning")</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="item">
-                        <div>@Html.LabelFor(model => model.Details)</div>
-                        <div>@Html.TextAreaFor(model => model.Details, new { @class = "field-width1", @rows = "4" })</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <div class="item">
-                        <div>@Html.LabelFor(model => model.Compensation)</div>
-                        <div>$@Html.TextBoxFor(model => model.Compensation, new { @class = "field-width5" })USD</div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <button class="button-action" id="btnUpdate" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
-                    @if (Model.ID > 0)
-                    { //don't show the delete unless this Property has already been saved to the database
-                        <button class="button-cancel" id="btnDelete" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
+                        string[] rates = new string[5];
+                        if (rate > 0) { rates[0] = "checked"; }
+                        if (rate > 1) { rates[1] = "checked"; }
+                        if (rate > 2) { rates[2] = "checked"; }
+                        if (rate > 3) { rates[3] = "checked"; }
+                        if (rate > 4) { rates[4] = "checked"; }
                     }
-                    <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+                    @if (Model.User.UID != Model.Property.User.UID)
+                    { //don't allow rating your own Propertys
+                        <span id="rate1" onclick="rateProperty(@Model.User.UID, @Model.Property.ID, 1);" class="fa fa-star @rates[0] rate-star"></span>
+                        <span id="rate2" onclick="rateProperty(@Model.User.UID, @Model.Property.ID, 2);" class="fa fa-star @rates[1] rate-star"></span>
+                        <span id="rate3" onclick="rateProperty(@Model.User.UID, @Model.Property.ID, 3);" class="fa fa-star @rates[2] rate-star"></span>
+                        <span id="rate4" onclick="rateProperty(@Model.User.UID, @Model.Property.ID, 4);" class="fa fa-star @rates[3] rate-star"></span>
+                        <span id="rate5" onclick="rateProperty(@Model.User.UID, @Model.Property.ID, 5);" class="fa fa-star @rates[4] rate-star"></span>
+                        if (rate > 0)
+                        {<span>(your rating)</span>}
+                    }
                 </div>
             </div>
+        }
+    }
+    <div class="bold">Title</div>
+    <p>@Model.Property.Title</p>
 
-            }
-            }
+    <div class="bold">Start Date/Time</div>
+    <p>@Model.Property.Start</p>
 
-            <script>
-                $(document).ready(function () {
-                    SetActiveMenus('profile', 'properties');
-                });
-            </script>
+    @*<div class="bold">End Date/Time</div>
+    <p>@Model.Property.End</p>
+
+    <div class="bold">Description</div>
+    <p>@Model.Property.Description</p>*@
+
+    <h3>Location</h3>
+
+    @*<div class="bold">Location Title</div>
+    <p>@Model.Property.Location.Title</p>
+
+    <div class="bold">Location Description</div>
+    <p>@Model.Property.Location.Description</p>*@
+
+    <div class="bold">Address</div>
+    <p>@Model.Property.Location.Address.FullAddress</p>
+
+    <div class="bold">Host</div>
+    <p>@Model.User.FirstName @Model.User.LastName (@Model.User.Email)</p>
+</div>
+
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('home');
+
+        //new report jquery
+        $("#report-ellipsis").click(function () {
+            $("#report-panel").fadeToggle("medium");
+        });
+
+        $("#report-close").click(function () {
+            $("#report-failed").hide();
+            $("#report-panel").fadeToggle("medium");
+        });
+
+        $("#report-list").change(function () {
+            if ($("#report-list").val() != '0') {
+                $("#report-submitting").show();
+                SaveReport(@Model.User.UID, @Model.Property.ID, $("#report-list").val());
+            }
+        });
+	});
+</script>
