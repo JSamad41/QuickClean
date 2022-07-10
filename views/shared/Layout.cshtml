@@ -1,4 +1,4 @@
-﻿@using System.Web.Optimization;
+@using System.Web.Optimization;
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,8 +44,8 @@
 <body>
 
     @{
-        web2.Models.User uCurrent = new web2.Models.User();
-        uCurrent = uCurrent.GetUserSession();
+		QuickClean.Models.User uCurrent = new QuickClean.Models.User();
+		uCurrent = uCurrent.GetUserSession();
     }
 
     <div class="topnav">
