@@ -1,4 +1,4 @@
-﻿@model web2.Models.Property
+@model QuickClean.Models.Property
 
 @{
 	ViewBag.Title = string.Concat("Property Gallery: ", @Model.Title);
@@ -26,7 +26,7 @@ else {
 	}
 	else {
 		<p>Below are the gallery images for this property.</p>
-		foreach (web2.Models.Image i in Model.Images) {
+		foreach (QuickClean.Models.Image i in Model.Images) {
 			<div id="image-@i.ImageID" class="user-image-container">
 				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 					i.FileExtension, ";base64,",
