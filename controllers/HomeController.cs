@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace web2.Controllers
+namespace QuickClean.Controllers
 {
 	public class HomeController : Controller
 	{
