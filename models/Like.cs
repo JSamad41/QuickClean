@@ -1,5 +1,5 @@
-﻿
-namespace web2.Models {
+
+namespace QuickClean.Models {
 	public class Like {
 
 		public long ID = 0;
