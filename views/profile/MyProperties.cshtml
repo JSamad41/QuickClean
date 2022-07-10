@@ -1,4 +1,4 @@
-﻿@model web2.Models.User
+@model QuickClean.Models.User
 @{
     ViewBag.Title = "MyProperties";
 }
@@ -44,7 +44,7 @@ else
     else
     {
         <div>
-            @foreach (web2.Models.Property e in Model.Properties)
+            @foreach (QuickClean.Models.Property e in Model.Properties)
             {
                 <div id="image-@e.ID" class="user-image-container @(!e.IsActive ? "in-active":"")">
                     @if (e.PropertyImage != null)
