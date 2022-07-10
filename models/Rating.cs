@@ -1,5 +1,4 @@
-﻿
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class Rating {
 		public long RateID = 0;
 		public long UID = 0;
