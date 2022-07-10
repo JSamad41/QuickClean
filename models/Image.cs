@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class Image {
 		public long ImageID { get; set; }
 		public byte[] ImageData;
