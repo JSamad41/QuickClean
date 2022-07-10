@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections.Generic;
 
-namespace web2.Models {
+namespace QuickClean.Models {
     public class Database {
 		public bool InsertReport(long UID, long IDToReport, int ProblemID)
 		{
