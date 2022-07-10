@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.IO;
 
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class Property {
 		public long ID = 0;
 		public string Title = string.Empty;
