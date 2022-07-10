@@ -1,5 +1,4 @@
-﻿
-@model web2.Models.User
+@model QuickClean.Models.User
 @{
     ViewBag.Title = "Sign Up";
 }
@@ -11,7 +10,7 @@
 @using (Html.BeginForm(FormMethod.Post))
 {
 
-    if (Model.ActionType == web2.Models.User.ActionTypes.DuplicateUserID)
+    if (Model.ActionType == QuickClean.Models.User.ActionTypes.DuplicateUserID)
     {
         <div id="content-locked">
             <i class="fad fa-exclamation-triangle fa-2x"></i>
@@ -19,7 +18,7 @@
         </div>
     }
 
-    if (Model.ActionType == web2.Models.User.ActionTypes.DuplicateEmail)
+    if (Model.ActionType == QuickClean.Models.User.ActionTypes.DuplicateEmail)
     {
         <div id="content-locked">
             <i class="fad fa-exclamation-triangle fa-2x"></i>
@@ -27,7 +26,7 @@
         </div>
     }
 
-    if (Model.ActionType == web2.Models.User.ActionTypes.RequiredFieldsMissing)
+    if (Model.ActionType == QuickClean.Models.User.ActionTypes.RequiredFieldsMissing)
     {
         <div id="content-locked">
             <i class="fad fa-exclamation-triangle fa-2x"></i>
