@@ -1,5 +1,4 @@
-﻿
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class Location {
         public string Title = string.Empty;
 		public string Description = string.Empty;
