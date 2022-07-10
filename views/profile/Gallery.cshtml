@@ -1,4 +1,4 @@
-﻿@model web2.Models.User
+@model QuickClean.Models.User
 
 @{
     ViewBag.Title = "Gallery";
@@ -33,7 +33,7 @@ else
         if (Model.Images.Count > 0)
         {
             <h4>Your gallery</h4>
-            foreach (web2.Models.Image i in Model.Images)
+            foreach (QuickClean.Models.Image i in Model.Images)
             {
                 <div id="image-@i.ImageID" class="user-image-container">
                     <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
