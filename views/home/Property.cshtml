@@ -1,5 +1,4 @@
-﻿
-@model web2.Models.PropertyContent
+@model QuickClean.Models.PropertyContent
 
 @{
     ViewBag.Title = @Model.Property.Title;
@@ -86,11 +85,11 @@
                             Report this as:
                             <select id="report-list" name="lstReport">
                                 <option value="0">(select)</option>
-                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.MissleadingorScam)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.MissleadingorScam)</option>
-                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Offensive)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Offensive)</option>
-                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.SexuallyInappropriate)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.SexuallyInappropriate)</option>
-                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Spam)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Spam)</option>
-                                <option value="@Convert.ToInt32(web2.Models.Report.ProblemTypes.Violent)">@web2.Models.Report.GetProblemText(web2.Models.Report.ProblemTypes.Violent)</option>
+                                <option value="@Convert.ToInt32(QuickClean.Models.Report.ProblemTypes.MissleadingorScam)">@QuickClean.Models.Report.GetProblemText(QuickClean.Models.Report.ProblemTypes.MissleadingorScam)</option>
+                                <option value="@Convert.ToInt32(QuickClean.Models.Report.ProblemTypes.Offensive)">@QuickClean.Models.Report.GetProblemText(QuickClean.Models.Report.ProblemTypes.Offensive)</option>
+                                <option value="@Convert.ToInt32(QuickClean.Models.Report.ProblemTypes.SexuallyInappropriate)">@QuickClean.Models.Report.GetProblemText(QuickClean.Models.Report.ProblemTypes.SexuallyInappropriate)</option>
+                                <option value="@Convert.ToInt32(QuickClean.Models.Report.ProblemTypes.Spam)">@QuickClean.Models.Report.GetProblemText(QuickClean.Models.Report.ProblemTypes.Spam)</option>
+                                <option value="@Convert.ToInt32(QuickClean.Models.Report.ProblemTypes.Violent)">@QuickClean.Models.Report.GetProblemText(QuickClean.Models.Report.ProblemTypes.Violent)</option>
                             </select>
                             <span id="report-close" title="Close this panel">&times;</span>
                         </p>
@@ -114,7 +113,7 @@
                         }
                         else
                         {
-                            if (Model.User.DoesUserLike(web2.Models.Like.Types.Property, Model.Property.ID))
+                            if (Model.User.DoesUserLike(QuickClean.Models.Like.Types.Property, Model.Property.ID))
                             {
                                 strLikeClass = "fas"; //this is the "like" class
                             }
@@ -123,7 +122,7 @@
                             </a>
                         }
 
-                        byte rate = Model.User.GetUserRating(web2.Models.Rating.Types.Property, Model.Property.ID);
+                        byte rate = Model.User.GetUserRating(QuickClean.Models.Rating.Types.Property, Model.Property.ID);
 
                         string[] rates = new string[5];
                         if (rate > 0) { rates[0] = "checked"; }
