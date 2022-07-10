@@ -1,5 +1,4 @@
-﻿
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class PropertyContent
 	{
 		public Property Property;
