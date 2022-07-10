@@ -1,6 +1,6 @@
-﻿using System.Web.Optimization;
+using System.Web.Optimization;
 
-namespace web2 {
+namespace QuickClean {
 	public class BundleConfig {
 		public static void RegisterBundles(BundleCollection bundles) {
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -10,7 +10,7 @@ namespace web2 {
 						"~/Scripts/jquery-{version}.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
-						"~/Content/Site.css"));
+						"~/Content/site.css"));
 		}
 	}
 }
