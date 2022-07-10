@@ -1,7 +1,7 @@
-﻿
+
 using System.ComponentModel;
 
-namespace web2.Models {
+namespace QuickClean.Models {
 	public class Address {
 
 		public string Address1 = string.Empty;
