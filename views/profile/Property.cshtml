@@ -1,4 +1,4 @@
-﻿@model web2.Models.Property
+@model QuickClean.Models.Property
 
 @{
     ViewBag.Title = string.Concat("Property Details", @Model.Title);
@@ -21,7 +21,7 @@ else
     <h2>@strHeader</h2>
     @Html.Partial("UserTabMenu")
     <p>@strText</p>
-    if (Model.ActionType == web2.Models.Property.ActionTypes.RequiredFieldsMissing)
+    if (Model.ActionType == QuickClean.Models.Property.ActionTypes.RequiredFieldsMissing)
     {
         <div id="content-locked">
             <i class="fad fa-exclamation-triangle fa-2x"></i>
@@ -181,8 +181,8 @@ else
             }
             }
 
-            <script>
-                $(document).ready(function () {
-                    SetActiveMenus('profile', 'properties');
-                });
-            </script>
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'properties');
+    });
+</script>
