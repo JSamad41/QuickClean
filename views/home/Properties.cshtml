@@ -1,4 +1,4 @@
-﻿@model web2.Models.HomeContent
+@model QuickClean.Models.HomeContent
 
 @{
     ViewBag.Title = "Current Properties ";
@@ -39,7 +39,7 @@
         color: #4CAF50;
     }
 
-    .web2-like {
+    QuickClean {
         color: #4CAF50;
     }
 
@@ -70,7 +70,7 @@
 else
 {
     <div>
-        @foreach (web2.Models.Property e in Model.Properties)
+        @foreach (QuickClean.Models.Property e in Model.Properties)
          {
             <div id="image-@e.ID" class="user-image-container">
                 @if (e.PropertyImage != null)
