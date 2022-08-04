@@ -122,31 +122,25 @@ namespace QuickClean.Models {
 					{
 						Property e = new Property();
 						e.ID = (long)dr["PropertyID"];
-						//e.Title = (string)dr["Title"];
-						//e.Description = (string)dr["Desc"];
 						if (dr["StartDate"] != null) e.Start = (DateTime)dr["StartDate"];
-						//if (dr["EndDate"] != null) e.End = (DateTime)dr["EndDate"];
-						//e.TotalLikes = (int)dr["TotalLikes"];
+
 						if (dr["IsActive"].ToString() == "N") e.IsActive = false;
 						e.AverageRating = (int)dr["AvgRating"];
-						e.squareFootage = (string)dr["squareFootage"];
-						e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
-						e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
-						
-						if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
-						if (dr["deepCleaning"].ToString() == "N") e.deepCleaning = false;
+                        e.squareFootage = (string)dr["squareFootage"];
+                        e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
+                        e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
 
-						if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false;
-						if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false;
-						if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false;
-						if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false;
+                        if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
 
-						e.Details = (string)dr["Details"];
+                        if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false;
+                        if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false;
+                        if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false;
+                        if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false;
+
+                        e.Details = (string)dr["Details"];
 						e.Compensation = (string)dr["Compensation"];
 
 						e.Location = new Location();
-						//e.Location.Title = (string)dr["LocationTitle"];
-						//e.Location.Description = (string)dr["LocationDesc"];
 
 						e.Location.Address = new Address();
 						e.Location.Address.Address1 = (string)dr["Address1"];
@@ -296,55 +290,45 @@ namespace QuickClean.Models {
 
 				SetParameter(ref cm, "@id", e.ID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
 				SetParameter(ref cm, "@owner_uid", e.User.UID, SqlDbType.BigInt);
-				//SetParameter(ref cm, "@title", e.Title, SqlDbType.NVarChar);
-				//SetParameter(ref cm, "@desc", e.Description, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@start_date", e.Start, SqlDbType.DateTime);
-				//SetParameter(ref cm, "@end_date", e.End, SqlDbType.DateTime);
-				//SetParameter(ref cm, "@location_title", e.Location.Title, SqlDbType.NVarChar);
-				//SetParameter(ref cm, "@location_desc", e.Location.Description, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@address1", e.Location.Address.Address1, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@address2", e.Location.Address.Address2, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@city", e.Location.Address.City, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@state", e.Location.Address.State, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@zip", e.Location.Address.Zip, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
 
-				if (e.standardCleaning)
-					SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
+                if (e.standardCleaning)
+                    SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
 
-				if (e.deepCleaning)
-					SetParameter(ref cm, "@deepCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@deepCleaning", "N", SqlDbType.Char);
+                if (e.carpetCleaning)
+                    SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
 
-				if (e.carpetCleaning)
-					SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
-				
-				if (e.baseboardCleaning)
-					SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
-				
-				if (e.laundryCleaning)
-					SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
-				
-				if (e.dishCleaning)
-					SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
+                if (e.baseboardCleaning)
+                    SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
+
+                if (e.laundryCleaning)
+                    SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
+
+                if (e.dishCleaning)
+                    SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
 
 
-				if (e.IsActive)
+                if (e.IsActive)
 					SetParameter(ref cm, "@is_active", "Y", SqlDbType.Char);
 				else
 					SetParameter(ref cm, "@is_active", "N", SqlDbType.Char);
@@ -447,32 +431,25 @@ namespace QuickClean.Models {
 					{
 						Property e = new Property();
 						e.ID = (long)dr["PropertyID"];
-						//e.Title = (string)dr["Title"];
-						//e.Description = (string)dr["Desc"];
 						if (dr["StartDate"] != null) e.Start = (DateTime)dr["StartDate"];
-						//if (dr["EndDate"] != null) e.End = (DateTime)dr["EndDate"];
 
 						if (dr["IsActive"].ToString() == "N") e.IsActive = false;
 
-						e.squareFootage = (string)dr["squareFootage"];
-						e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
-						e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
+                        e.squareFootage = (string)dr["squareFootage"];
+                        e.numberOfBedrooms = (string)dr["numberOfBedrooms"];
+                        e.numberOfBathrooms = (string)dr["numberOfBathrooms"];
 
-						if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
-						if (dr["deepCleaning"].ToString() == "N") e.deepCleaning = false;
+                        if (dr["standardCleaning"].ToString() == "N") e.standardCleaning = false;
 
-						if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false;
-						if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false;
-						if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false;
-						if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false;
+                        if (dr["carpetCleaning"].ToString() == "N") e.carpetCleaning = false; else e.carpetCleaning = true;
+						if (dr["baseboardCleaning"].ToString() == "N") e.baseboardCleaning = false; else e.baseboardCleaning = true;
+						if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false; else e.laundryCleaning = true;
+						if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false; else e.dishCleaning = true;
 
 						e.Details = (string)dr["Details"];
 						e.Compensation = (string)dr["Compensation"];
 
-						//e.TotalLikes = (int)dr["TotalLikes"];
 						e.Location = new Location();
-						//e.Location.Title = (string)dr["LocationTitle"];
-						//e.Location.Description = (string)dr["LocationDesc"];
 
 						e.Location.Address = new Address();
 						e.Location.Address.Address1 = (string)dr["Address1"];
@@ -486,11 +463,6 @@ namespace QuickClean.Models {
 						e.User.UserID = (string)dr["UserID"];
 						e.User.FirstName = (string)dr["FirstName"];
 						e.User.LastName = (string)dr["LastName"];
-						//e.User.Address = (string)dr["Address"];
-						//e.User.City = (string)dr["City"];
-						//e.User.State = (string)dr["State"];
-						//e.User.Zip = (string)dr["Zip"];
-						//e.User.PhoneNumber = (string)dr["PhoneNumber"];
 						e.User.Email = (string)dr["Email"];
 
 						List<Image> images = GetPropertyImages(e.ID, 0, true);
@@ -541,55 +513,45 @@ namespace QuickClean.Models {
 
 				SetParameter(ref cm, "@id", e.ID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@owner_uid", e.User.UID, SqlDbType.BigInt);
-				//SetParameter(ref cm, "@title", e.Title, SqlDbType.NVarChar);
-				//SetParameter(ref cm, "@desc", e.Description, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@start", e.Start, SqlDbType.DateTime);
-				//SetParameter(ref cm, "@end", e.End, SqlDbType.DateTime);
-				//SetParameter(ref cm, "@location_title", e.Location.Title, SqlDbType.NVarChar);
-				//SetParameter(ref cm, "@location_desc", e.Location.Description, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@address1", e.Location.Address.Address1, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@address2", e.Location.Address.Address2, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@city", e.Location.Address.City, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@state", e.Location.Address.State, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@zip", e.Location.Address.Zip, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@squareFootage", e.squareFootage, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@numberOfBedrooms", e.numberOfBedrooms, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
 
-				SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
 
-				if (e.standardCleaning)
-					SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
+                if (e.standardCleaning)
+                    SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@standardCleaning", "N", SqlDbType.Char);
 
-				if (e.deepCleaning)
-					SetParameter(ref cm, "@deepCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@deepCleaning", "N", SqlDbType.Char);
+                if (e.carpetCleaning)
+                    SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
 
-				if (e.carpetCleaning)
-					SetParameter(ref cm, "@carpetCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@carpetCleaning", "N", SqlDbType.Char);
+                if (e.baseboardCleaning)
+                    SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
 
-				if (e.baseboardCleaning)
-					SetParameter(ref cm, "@baseboardCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@baseboardCleaning", "N", SqlDbType.Char);
+                if (e.laundryCleaning)
+                    SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
 
-				if (e.laundryCleaning)
-					SetParameter(ref cm, "@laundryCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@laundryCleaning", "N", SqlDbType.Char);
+                if (e.dishCleaning)
+                    SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
+                else
+                    SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
 
-				if (e.dishCleaning)
-					SetParameter(ref cm, "@dishCleaning", "Y", SqlDbType.Char);
-				else
-					SetParameter(ref cm, "@dishCleaning", "N", SqlDbType.Char);
-
-				if (e.IsActive)
+                if (e.IsActive)
 					SetParameter(ref cm, "@is_active", "Y", SqlDbType.Char);
 				else
 					SetParameter(ref cm, "@is_active", "N", SqlDbType.Char);
