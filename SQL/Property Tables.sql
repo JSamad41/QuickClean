@@ -18,6 +18,13 @@ CREATE TABLE [dbo].[PROPERTIES](
 	[squareFootage] [nvarchar](20) NOT NULL,
 	[numberOfBedrooms] [nvarchar](20) NOT NULL,
 	[numberOfBathrooms] [nvarchar](20) NOT NULL,
+	[standardCleaning] [char](1) NOT NULL,
+	[carpetCleaning] [char](1) NOT NULL,
+	[baseboardCleaning] [char](1) NOT NULL,
+	[laundryCleaning] [char](1) NOT NULL,
+	[dishCleaning] [char](1) NOT NULL,
+	[Details] [nvarchar](500) NOT NULL,
+	[Compensation] [nvarchar](20) NOT NULL,
  CONSTRAINT [PK_PROPERTIES] PRIMARY KEY CLUSTERED 
 (
 	[PropertyID] ASC
@@ -53,6 +60,27 @@ ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_numberOfBedrooms] 
 GO
 
 ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_numberOfBathrooms]  DEFAULT ('') FOR [numberOfBathrooms]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_standardCleaning]  DEFAULT ('Y') FOR [standardCleaning]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_carpetCleaning]  DEFAULT ('Y') FOR [carpetCleaning]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_baseboardCleaning]  DEFAULT ('Y') FOR [baseboardCleaning]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_laundryCleaning]  DEFAULT ('Y') FOR [laundryCleaning]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_dishCleaning]  DEFAULT ('Y') FOR [dishCleaning]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_Details]  DEFAULT ('') FOR [Details]
+GO
+
+ALTER TABLE [dbo].[PROPERTIES] ADD  CONSTRAINT [DF_PROPERTIES_Compensation]  DEFAULT ('') FOR [Compensation]
 GO
 
 SET ANSI_NULLS ON
