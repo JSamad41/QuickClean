@@ -105,84 +105,266 @@ else
                 </div>
             </div>
 
-            <div style="font-weight:bold">Property Specifics:</div>
+        <div class="section">
+            <div class="item">
 
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.squareFootage, "Square Footage")</div>
-                    <div>@Html.TextBoxFor(model => model.squareFootage, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
-                    <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
-                    <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
-                </div>
+                @{
+                    List<SelectListItem> listItems = new List<SelectListItem>();
+
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "Under 1,500",
+                        Value = "75",
+                        //Selected = true
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "1,500 - 3,000",
+                        Value = "100",
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "3,000 - 4,000",
+                        Value = "150"
+                    });
+                    listItems.Add(new SelectListItem
+                    {
+                        Text = "5,000 and Over",
+                        Value = "200"
+                    });
+                }
+
+                <div>@Html.LabelFor(model => model.squareFootage, "Sq. Footage")</div>
+                <div>@Html.DropDownListFor(model => model.squareFootage, listItems, "Select Sq. Footage", new { @name = "squareFootage", @id = "squareFootage", @class = "tot_amount"})</div>
             </div>
+            <div class="item">
+                <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
+                <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
+            </div>
+            <div class="item">
+                <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
+                <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
+            </div>
+        </div>
 
             <div style="font-weight:bold">Type of Cleaning:</div>
             <div class="section">
                 <div class="item">
-                    <div>&nbsp;</div>
-                    <div>@Html.CheckBoxFor(model => model.standardCleaning) @Html.LabelFor(model => model.standardCleaning, "Standard Cleaning")</div>
+                    <div>@Html.RadioButtonFor(model => model.standardCleaning, "true", new { @value = "true", @id = "standardCleaning", @name = "standardCleaning", @class = "tot_amount", @checked = "checked" })@Html.LabelFor(model => model.standardCleaning, "Standard Cleaning")</div>
                 </div>
                 <div class="item">
-                    <div>&nbsp;</div>
-                    <div>@Html.CheckBoxFor(model => model.deepCleaning) @Html.LabelFor(model => model.deepCleaning, "Deep Cleaning")</div>
+                    <div>@Html.RadioButtonFor(model => model.standardCleaning, "false", new { @value = "false", @id = "standardCleaning", @name = "standardCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.standardCleaning, "Deep Cleaning")</div>
                 </div>
             </div>
 
-                <div style="font-weight:bold">Extras:</div>
-                <div class="section">
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.carpetCleaning) @Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.baseboardCleaning) @Html.LabelFor(model => model.baseboardCleaning, "Baseboard Cleaning")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.laundryCleaning) @Html.LabelFor(model => model.laundryCleaning, "Laundry")</div>
-                    </div>
-                    <div class="item">
-                        <div>&nbsp;</div>
-                        <div>@Html.CheckBoxFor(model => model.dishCleaning) @Html.LabelFor(model => model.dishCleaning, "Dish Cleaning")</div>
-                    </div>
-                </div>
+            <div style="font-weight:bold">Extras:</div>
 
-                <div class="section">
-                    <div class="item">
-                        <div>@Html.LabelFor(model => model.Details)</div>
-                        <div>@Html.TextAreaFor(model => model.Details, new { @class = "field-width1", @rows = "4" })</div>
-                    </div>
+            <div class="section">
+                <div class="item">
+                    <div>@Html.CheckBoxFor(model => model.carpetCleaning, new { @id = "carpetCleaning", @class = "tot_amount"})@Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
                 </div>
-
-                <div class="section">
-                    <div class="item">
-                        <div>@Html.LabelFor(model => model.Compensation)</div>
-                        <div>$@Html.TextBoxFor(model => model.Compensation, new { @class = "field-width5" })USD</div>
-                    </div>
+                <div class="item">
+                    <div>@Html.CheckBoxFor(model => model.baseboardCleaning, new { @id = "baseboardCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.baseboardCleaning, "Baseboard Cleaning")</div>
                 </div>
-
-                <div class="section">
-                    <button class="button-action" id="btnUpdate" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
-                    @if (Model.ID > 0)
-                    { //don't show the delete unless this Property has already been saved to the database
-                        <button class="button-cancel" id="btnDelete" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
-                    }
-                    <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+                <div class="item">
+                    <div>@Html.CheckBoxFor(model => model.laundryCleaning, new { @id = "laundryCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.laundryCleaning, "Laundry Cleaning")</div>
+                </div>
+                <div class="item">
+                    <div>@Html.CheckBoxFor(model => model.dishCleaning, new { @id = "dishCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.dishCleaning, "Dish Cleaning")</div>
                 </div>
             </div>
 
-            }
-            }
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Details)</div>
+                    <div>@Html.TextAreaFor(model => model.Details, new { @class = "field-width1", @rows = "4" })</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="item">
+                    <div style="font-weight:bold">@Html.LabelFor(model => model.Compensation, "Grand Total")</div>
+                    <div>$ @Html.TextBoxFor(model => model.Compensation, new { @size = "7", @id = "compensation" })</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="save"><i class='far fa-save'></i> Save</button>
+                @if (Model.ID > 0)
+                { //don't show the delete unless this Property has already been saved to the database
+                    <button class="button-cancel" id="btnDelete" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
+                }
+                <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+            </div>
+        </div>
+    }
+}
+
+
+
+
 
 <script>
+    function getTotal(objSelector) {
+        var total = 0;
+        var sqF = parseInt($('#squareFootage').val());
+        var cleanType = $('#standardCleaning:checked').val();
+        var carpet = $("#carpetCleaning").is(":checked") ? "true" : "false";
+        var baseboard = $("#baseboardCleaning").is(":checked") ? "true" : "false";
+        var laundry = $("#laundryCleaning").is(":checked") ? "true" : "false";
+        var dish = $("#dishCleaning").is(":checked") ? "true" : "false";
+
+        switch (sqF) {
+            case 75:
+                switch (cleanType) {
+                    case "true":
+                        if (carpet == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 25;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 25;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 25;
+                        }
+                        total = sqF;
+                        break;
+                    case "false":
+                        if (carpet == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 25;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 25;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 25;
+                        }
+                        total = sqF + 50;
+                        break;
+                }
+                break;
+            case 100:
+                switch (cleanType) {
+                    case "true":
+                        if (carpet == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 50;
+                        }
+                        total = sqF;
+                        break;
+                    case "false":
+                        if (carpet == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 50;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 50;
+                        }
+                        total = sqF + 50;
+                        break;
+                }
+                break;
+            case 150:
+                switch (cleanType) {
+                    case "true":
+                        if (carpet == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 75;
+                        }
+                        total = sqF;
+                        break;
+                    case "false":
+                        if (carpet == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 75;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 75;
+                        }
+                        total = sqF + 75;
+                        break;
+                }
+                break;
+            case 200:
+                switch (cleanType) {
+                    case "true":
+                        if (carpet == "true") {
+                            sqF = sqF + 125;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 100;
+                        }
+                        total = sqF;
+                        break;
+                    case "false":
+                        if (carpet == "true") {
+                            sqF = sqF + 125;
+                        }
+                        if (baseboard == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (laundry == "true") {
+                            sqF = sqF + 100;
+                        }
+                        if (dish == "true") {
+                            sqF = sqF + 100;
+                        }
+                        total = sqF + 100;
+                        break;
+                }
+                break;
+        }
+        //$('#total1').val(total);
+        $("#compensation").val(total);
+    }
+    $(document).ready(function () {
+        getTotal($(".tot_amount"));
+        $(".tot_amount").change(function (event) {
+            getTotal($(".tot_amount:checked"));
+        });
+
+    });
+
     $(document).ready(function () {
         SetActiveMenus('profile', 'properties');
     });
+
 </script>
