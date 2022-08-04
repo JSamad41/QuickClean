@@ -85,6 +85,13 @@ CREATE PROCEDURE [dbo].[INSERT_PROPERTIES]
 ,@squareFootage nvarchar(20)
 ,@numberOfBedrooms nvarchar(20)
 ,@numberOfBathrooms nvarchar(20)
+,@standardCleaning char(1)
+,@carpetCleaning char(1)
+,@baseboardCleaning char(1)
+,@laundryCleaning char(1)
+,@dishCleaning char(1)
+,@details nvarchar(500)
+,@compensation nvarchar(20)
 ,@is_active char(1)
 AS
 BEGIN
@@ -101,6 +108,13 @@ BEGIN
 		,[squareFootage]
 		,[numberOfBedrooms]
 		,[numberOfBathrooms]
+		,[standardCleaning]
+		,[carpetCleaning]
+		,[baseboardCleaning]
+		,[laundryCleaning]
+		,[dishCleaning]
+		,[Details]
+		,[Compensation]
 		,[IsActive])
 	VALUES
 		(@owner_uid
@@ -113,6 +127,13 @@ BEGIN
 		,@squareFootage
 		,@numberOfBedrooms
 		,@numberOfBathrooms
+		,@standardCleaning
+		,@carpetCleaning
+		,@baseboardCleaning
+		,@laundryCleaning
+		,@dishCleaning
+		,@details
+		,@compensation
 		,@is_active)
 
 	select @id=@@IDENTITY
@@ -255,6 +276,13 @@ CREATE PROCEDURE [dbo].[UPDATE_PROPERTY]
 ,@squareFootage nvarchar(20)
 ,@numberOfBedrooms nvarchar(20)
 ,@numberOfBathrooms nvarchar(20)
+,@standardCleaning char(1)
+,@carpetCleaning char(1)
+,@baseboardCleaning char(1)
+,@laundryCleaning char(1)
+,@dishCleaning char(1)
+,@details nvarchar(500)
+,@compensation nvarchar(20)
 ,@is_active char(1)
 AS
 BEGIN
@@ -271,6 +299,13 @@ BEGIN
 		  ,[squareFootage] = @squareFootage
 		  ,[numberOfBedrooms] = @numberOfBedrooms
 		  ,[numberOfBathrooms] = @numberOfBathrooms
+		  ,[standardCleaning] = @standardCleaning
+		  ,[carpetCleaning] = @carpetCleaning
+		  ,[baseboardCleaning] = @baseboardCleaning
+		  ,[laundryCleaning] = @laundryCleaning
+		  ,[dishCleaning] = @dishCleaning
+		  ,[Details] = @details
+		  ,[Compensation] = @compensation
 		  ,[IsActive] = @is_active
 	WHERE PropertyID = @id
 
