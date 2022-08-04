@@ -30,14 +30,14 @@ namespace QuickClean.Models {
 		public bool dishCleaning = false;
 		public string Details = string.Empty;
 		public string Compensation;
-		public string squareFootage;
-		public string numberOfBedrooms;
-		public string numberOfBathrooms;
-		public bool standardCleaning = true;
-		public bool deepCleaning = false;
+        public string squareFootage { get; set; }
+        public string numberOfBedrooms;
+        public string numberOfBathrooms;
+        public bool standardCleaning = true;
+        public int intCompensation = 0;
 
 
-		public Image PrimaryImage {
+        public Image PrimaryImage {
 			get {
 				if (this.Images != null) {
 					foreach (Image i in this.Images) {
