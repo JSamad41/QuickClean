@@ -368,6 +368,86 @@ namespace QuickClean.Controllers
 			return View(u);
 		}
 
+		public ActionResult CleanerIndex()
+		{
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+			if (u.IsAuthenticated)
+			{
+				Models.Database db = new Models.Database();
+				List<Models.Image> images = new List<Models.Image>();
+				images = db.GetUserImages(u.UID, 0, true);
+				u.UserImage = new Models.Image();
+				if (images.Count > 0) u.UserImage = images[0];
+			}
+			return View(u);
+		}
+
+		[HttpPost]
+		public ActionResult CleanerIndex(HttpPostedFileBase UserImage, FormCollection col)
+		{
+			try
+			{
+				Models.User u = new Models.User();
+				u = u.GetUserSession();
+
+				u.FirstName = col["FirstName"];
+				u.LastName = col["LastName"];
+				u.Address = col["Address"];
+				u.City = col["City"];
+				u.State = col["State"];
+				u.Zip = col["Zip"];
+				u.PhoneNumber = col["PhoneNumber"];
+				u.Email = col["Email"];
+				u.UserID = col["UserID"];
+				u.Password = col["Password"];
+				u.Role = col["Role"];
+
+
+				if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0 )
+				{
+					u.ActionType = Models.User.ActionTypes.RequiredFieldsMissing;
+					return View(u);
+				}
+				else
+				{
+					if (col["btnSubmit"] == "update")
+					{ //update button pressed
+						u.Save();
+
+						u.UserImage = new Models.Image();
+						u.UserImage.ImageID = System.Convert.ToInt32(col["UserImage.ImageID"]);
+
+						if (UserImage != null)
+						{
+							u.UserImage = new Models.Image();
+							u.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+							u.UserImage.Primary = true;
+							u.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+							if (u.UserImage.IsImageFile())
+							{
+								u.UserImage.Size = UserImage.ContentLength;
+								Stream stream = UserImage.InputStream;
+								BinaryReader binaryReader = new BinaryReader(stream);
+								u.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+								u.UpdatePrimaryImage();
+							}
+						}
+
+						u.SaveUserSession();
+						return RedirectToAction("CleanerIndex");
+					}
+					return View(u);
+				}
+			}
+			catch (Exception)
+			{
+				Models.User u = new Models.User();
+				return View(u);
+			}
+
+		}
+
 		public ActionResult Index()
 		{
 			Models.User u = new Models.User();
@@ -393,11 +473,18 @@ namespace QuickClean.Controllers
 
 				u.FirstName = col["FirstName"];
 				u.LastName = col["LastName"];
+				u.Address = col["Address"];
+				u.City = col["City"];
+				u.State = col["State"];
+				u.Zip = col["Zip"];
+				u.PhoneNumber = col["PhoneNumber"];
 				u.Email = col["Email"];
 				u.UserID = col["UserID"];
 				u.Password = col["Password"];
+				u.Role = col["Role"];
 
-				if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0)
+
+				if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0 )
 				{
 					u.ActionType = Models.User.ActionTypes.RequiredFieldsMissing;
 					return View(u);
@@ -458,8 +545,9 @@ namespace QuickClean.Controllers
 				{
 					u.UserID = col["UserID"];
 					u.Password = col["Password"];
+					u.Role = col["Role"];
 
-					if (u.UserID.Length == 0 || u.Password.Length == 0)
+					if (u.UserID.Length == 0 || u.Password.Length == 0 || u.Role == "NULL")
 					{
 						u.ActionType = Models.User.ActionTypes.RequiredFieldsMissing;
 						return View(u);				
@@ -469,8 +557,16 @@ namespace QuickClean.Controllers
 						u = u.Login();
 						if (u != null && u.UID > 0)
 						{
-							u.SaveUserSession();
-							return RedirectToAction("Index");
+							if(u.Role == "owner")
+                            {
+								u.SaveUserSession();
+								return RedirectToAction("Index");
+							}
+							else
+                            {
+								u.SaveUserSession();
+								return RedirectToAction("CleanerIndex");
+							}			
 						}
 						else
 						{
@@ -507,8 +603,9 @@ namespace QuickClean.Controllers
 				u.Email = col["Email"];
 				u.UserID = col["UserID"];
 				u.Password = col["Password"];
+				u.Role = col["Role"];
 
-				if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0)
+				if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0 || u.Role.Length == 0)
 				{
 					u.ActionType = Models.User.ActionTypes.RequiredFieldsMissing;
 					return View(u);
@@ -523,7 +620,14 @@ namespace QuickClean.Controllers
 						{
 							case Models.User.ActionTypes.InsertSuccessful:
 								u.SaveUserSession();
-								return RedirectToAction("Index");
+								if(u.Role =="owner")
+                                {
+									return RedirectToAction("Index");
+								}
+                                else
+                                {
+									return RedirectToAction("CleanerIndex");
+								}						
 							//break;
 							default:
 								return View(u);
