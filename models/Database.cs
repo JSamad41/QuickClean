@@ -464,7 +464,7 @@ namespace QuickClean.Models {
 						e.User.FirstName = (string)dr["FirstName"];
 						e.User.LastName = (string)dr["LastName"];
 						e.User.Email = (string)dr["Email"];
-						e.User.Role = (string)dr["Role"];
+		
 
 						List<Image> images = GetPropertyImages(e.ID, 0, true);
 						if (images.Count > 0) e.PropertyImage = images[0];
