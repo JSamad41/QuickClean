@@ -34,7 +34,15 @@
         </div>
     }
 
-
+    <div style="font-weight:bold">Account Type:</div>
+    <div class="section">
+        <div class="item">
+            <div>@Html.RadioButtonFor(model => model.Role, "owner", new { @value = "owner", @name="Role", @checked = "checked" })@Html.LabelFor(model => model.Role, "Property Owner")</div>
+        </div>
+        <div class="item">
+            <div>@Html.RadioButtonFor(model => model.Role, "cleaner", new { @value = "cleaner", @name = "Role"})@Html.LabelFor(model => model.Role, "Cleaning Professional")</div>
+        </div>
+    </div>
 
     <div class="section">
         <div class="item">
