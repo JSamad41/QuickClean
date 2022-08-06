@@ -464,6 +464,7 @@ namespace QuickClean.Models {
 						e.User.FirstName = (string)dr["FirstName"];
 						e.User.LastName = (string)dr["LastName"];
 						e.User.Email = (string)dr["Email"];
+						e.User.Role = (string)dr["Role"];
 
 						List<Image> images = GetPropertyImages(e.ID, 0, true);
 						if (images.Count > 0) e.PropertyImage = images[0];
@@ -741,8 +742,9 @@ namespace QuickClean.Models {
 				SetParameter(ref cm, "@zip", u.LastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@phone_number", u.LastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@email", u.Email, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@role", u.Role, SqlDbType.NVarChar);
 
-                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
                 cm.ExecuteReader();
 
@@ -793,7 +795,8 @@ namespace QuickClean.Models {
 						newUser.State = (string)dr["State"];
 						newUser.Zip = (string)dr["Zip"];
 						newUser.PhoneNumber = (string)dr["PhoneNumber"];
-						newUser.Email = (string)dr["Email"];						
+						newUser.Email = (string)dr["Email"];
+						newUser.Role = (string)dr["Role"];
 					}
                 }
 				catch (Exception ex) { throw new Exception(ex.Message); }
@@ -823,6 +826,7 @@ namespace QuickClean.Models {
 				SetParameter(ref cm, "@zip", u.Zip, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@phone_number", u.PhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@email", u.Email, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@role", u.Role, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
