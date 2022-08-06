@@ -2,10 +2,9 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Profile Information</h2>
+<h2>Property Owner Profile Information</h2>
 
 <style>
-
 </style>
 
 @if (!Model.IsAuthenticated)
@@ -18,6 +17,16 @@ else
     using (Html.BeginForm("Index", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <p>To make changes to your profile enter your information below and click the Update button.</p>
+
+        <div style="font-weight:bold">Account Type:</div>
+        <div class="section">
+            <div class="item">
+                <div>@Html.RadioButtonFor(model => model.Role, "owner", new { @value = "owner", @name = "Role", @checked = "checked" })@Html.LabelFor(model => model.Role, "Property Owner")</div>
+            </div>
+            <div class="item">
+                <div>@Html.RadioButtonFor(model => model.Role, "cleaner", new { @value = "cleaner", @name = "Role" })@Html.LabelFor(model => model.Role, "Cleaning Professional")</div>
+            </div>
+        </div>
 
         <div id="user-profile-data">
             <div class="section">
@@ -80,8 +89,8 @@ else
                 <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
             </div>
         </div>
-                    }
-                    }
+    }
+}
 
 <script>
     $(document).ready(function () {
