@@ -20,6 +20,7 @@ namespace QuickClean.Models
 		public string UserID = string.Empty;	
 		public string Password = string.Empty;
 		public string Email = string.Empty;
+		public string Role = string.Empty;
 		public ActionTypes ActionType = ActionTypes.NoType;
 		public Image UserImage;
 		public List<Image> Images;
