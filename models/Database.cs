@@ -399,7 +399,7 @@ namespace QuickClean.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public List<Property> GetProperties(long ID = 0, long UID = 0, string LocationTitle = "")
+		public List<Property> GetProperties(long ID = 0, long UID = 0)
 		{
 			try
 			{
@@ -413,7 +413,7 @@ namespace QuickClean.Models {
 
 				if (ID > 0) SetParameter(ref da, "@id", ID, SqlDbType.BigInt);
 				if (UID > 0) SetParameter(ref da, "@uid", UID, SqlDbType.BigInt);
-				if (LocationTitle != "") SetParameter(ref da, "@location_title", LocationTitle, SqlDbType.NVarChar);
+				//if (LocationTitle != "") SetParameter(ref da, "@location_title", LocationTitle, SqlDbType.NVarChar);
 
 				try
 				{
