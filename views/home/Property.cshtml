@@ -25,31 +25,56 @@
         font-weight: bold;
     }
 
-	#report-ellipsis { vertical-align:middle; margin-left: 1em; }
+    #report-ellipsis {
+        vertical-align: middle;
+        margin-left: 1em;
+    }
 
-	#report-panel {
-		display: none;
-		margin-top: 1.5em;
-		margin-bottom: 0.5em;
-		padding-top: 0.25em;
-		padding-bottom: 0.25em;
-		padding-left: 0.75em;
-		padding-right: 0.75em;
-		background-color: lightyellow;
-		border: 1px solid darkgrey;
-		-webkit-border-radius: 0.3em;
-		-moz-border-radius: 0.3em;
-		border-radius: 0.3em;
-	}
+    #report-panel {
+        display: none;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        padding-top: 0.25em;
+        padding-bottom: 0.25em;
+        padding-left: 0.75em;
+        padding-right: 0.75em;
+        background-color: lightyellow;
+        border: 1px solid darkgrey;
+        -webkit-border-radius: 0.3em;
+        -moz-border-radius: 0.3em;
+        border-radius: 0.3em;
+    }
 
-	#report-close { color: black; float: right; font-size: 28px; font-weight: bold; padding-top: 0.25em; margin-left: 0.25em;}
-	#report-close:hover, #report-ellipsis:hover { color: red; text-decoration: none; cursor: pointer; }
-	#report-submitting, #report-submitted, #report-failed { display: none; }
-	#report-failed { color: red; }
-	.margin-right { margin-right: 0.25em; }
-	#fa-report-icon { color: red;}
+    #report-close {
+        color: black;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        padding-top: 0.25em;
+        margin-left: 0.25em;
+    }
 
+        #report-close:hover, #report-ellipsis:hover {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
+    #report-submitting, #report-submitted, #report-failed {
+        display: none;
+    }
+
+    #report-failed {
+        color: red;
+    }
+
+    .margin-right {
+        margin-right: 0.25em;
+    }
+
+    #fa-report-icon {
+        color: red;
+    }
 </style>
 
 <h2>@ViewBag.Title</h2>
@@ -73,10 +98,11 @@
     {
 
 
-<div class="section">
+        <div class="section">
             <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
-            
-            @if (Model.User.IsAuthenticated) { 
+
+            @if (Model.User.IsAuthenticated)
+            {
                 <span id="report-ellipsis" title="Report"><i class="far fa-ellipsis-v fa-2x ellipsis"></i></span>
                 <div id="report-panel">
                     <div id="report-content">
@@ -98,7 +124,7 @@
                     <div id="report-submitted"><p><i class="fal fa-check fa-2x margin-right"></i> Report Submitted.</p></div>
                     <div id="report-failed"><p><i class="far fa-exclamation-triangle fa-2x margin-right"></i> Report failed. Try again later.</p></div>
                 </div>
-    }
+            }
         </div>
 
         if (Model.User.IsAuthenticated)
@@ -145,31 +171,139 @@
             </div>
         }
     }
-    <div class="bold">Title</div>
-    <p>@Model.Property.Title</p>
 
-    <div class="bold">Start Date/Time</div>
+    <h3 class="bold">Start Date/Time</h3>
     <p>@Model.Property.Start</p>
 
-    @*<div class="bold">End Date/Time</div>
-    <p>@Model.Property.End</p>
 
-    <div class="bold">Description</div>
-    <p>@Model.Property.Description</p>*@
+    <div class="section">
+        <h3 class="bold">Property Details:</h3>
+    </div>
 
-    <h3>Location</h3>
+    <div class="section">
+        <div class="item">
+            <div style="font-weight:bold">@Html.Label(Model.Property.Location.Address.FullAddress, "Address")</div>
+            <div>@Html.Label(Model.Property.Location.Address.FullAddress, Model.Property.Location.Address.FullAddress, new { @readonly = "readonly" })</div>
+        </div>
+    </div>
 
-    @*<div class="bold">Location Title</div>
-    <p>@Model.Property.Location.Title</p>
+    <div class="section">
+        <div class="item">
 
-    <div class="bold">Location Description</div>
-    <p>@Model.Property.Location.Description</p>*@
+            @if (Model.Property.squareFootage == "75")
+            {
+                <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+                <div>@Html.Label(Model.Property.squareFootage, "Under 1,500", new { @class = "field-width4", @readonly = "readonly" })</div>
+            }
+            @if (Model.Property.squareFootage == "100")
+            {
+                <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+                <div>@Html.Label(Model.Property.squareFootage, "1,500 - 3,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+            }
+            @if (Model.Property.squareFootage == "150")
+            {
+                <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+                <div>@Html.Label(Model.Property.squareFootage, "3,000 - 4,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+            }
+            @if (Model.Property.squareFootage == "200")
+            {
+                <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+                <div>@Html.Label(Model.Property.squareFootage, "5,000 +", new { @class = "field-width4", @readonly = "readonly" })</div>
+            }
 
-    <div class="bold">Address</div>
-    <p>@Model.Property.Location.Address.FullAddress</p>
+        </div>
+        <div class="item">
+            <div style="font-weight:bold">@Html.Label(Model.Property.numberOfBedrooms, "# of Bedrooms")</div>
+            <div>@Html.Label(Model.Property.numberOfBedrooms, Model.Property.numberOfBedrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+        </div>
+        <div class="item">
+            <div style="font-weight:bold">@Html.Label(Model.Property.numberOfBathrooms, "# of Bathrooms")</div>
+            <div>@Html.Label(Model.Property.numberOfBathrooms, Model.Property.numberOfBathrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+        </div>
+    </div>
 
-    <div class="bold">Host</div>
-    <p>@Model.User.FirstName @Model.User.LastName (@Model.User.Email)</p>
+
+
+<div style="font-weight:bold">Type of Cleaning:</div>
+<div class="section">
+
+    @if (Model.Property.standardCleaning == true)
+    {
+        <div>
+            <p> Standard Cleaning </p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p> Deep Cleaning </p>
+        </div>
+    }
+
+    <div class="item">
+        <div></div>
+    </div>
+    <div class="item">
+        <div></div>
+    </div>
+</div>
+
+<div style="font-weight:bold">Extras:</div>
+<div class="section">
+
+    @if (Model.Property.carpetCleaning == true)
+    {
+        <div> Carpet Cleaning </div>
+    }
+    @if (Model.Property.baseboardCleaning == true)
+    {
+        <div> Baseboard Cleaning </div>
+    }
+    @if (Model.Property.laundryCleaning == true)
+    {
+        <div> Laundry Cleaning </div>
+    }
+    @if (Model.Property.dishCleaning == true)
+    {
+        <div> Dish Cleaning </div>
+    }
+</div>
+
+@<div class="section">
+    <div class="item">
+        <div></div>
+    </div>
+    <div class="item">
+        <div></div>
+    </div>
+    <div class="item">
+        <div></div>
+    </div>
+    <div class="item">
+        <div></div>
+    </div>
+</div>
+
+<div style="font-weight:bold">Details:</div>
+
+<div class="section">
+    <div class="item">
+        <div>@Html.Label(Model.Property.Details)</div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="item">
+        <div style="font-weight:bold">@Html.Label(Model.Property.Compensation, "Grand Total")</div>
+        <div>$ @Html.Label(Model.Property.Compensation, Model.Property.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
+    </div>
+</div>
+
+@if (Model.User.Role == "cleaner")
+{
+    <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class="fa-check"></i> Accept Job </button>
+}
+
 </div>
 
 <script>
