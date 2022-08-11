@@ -105,47 +105,47 @@ else
                 </div>
             </div>
 
-        <div class="section">
-            <div class="item">
+            <div class="section">
+                <div class="item">
 
-                @{
-                    List<SelectListItem> listItems = new List<SelectListItem>();
+                    @{
+                        List<SelectListItem> listItems = new List<SelectListItem>();
 
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "Under 1,500",
-                        Value = "75",
-                        //Selected = true
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "1,500 - 3,000",
-                        Value = "100",
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "3,000 - 4,000",
-                        Value = "150"
-                    });
-                    listItems.Add(new SelectListItem
-                    {
-                        Text = "5,000 and Over",
-                        Value = "200"
-                    });
-                }
+                        listItems.Add(new SelectListItem
+                        {
+                            Text = "Under 1,500",
+                            Value = "75",
+                            //Selected = true
+                        });
+                        listItems.Add(new SelectListItem
+                        {
+                            Text = "1,500 - 3,000",
+                            Value = "100",
+                        });
+                        listItems.Add(new SelectListItem
+                        {
+                            Text = "3,000 - 4,000",
+                            Value = "150"
+                        });
+                        listItems.Add(new SelectListItem
+                        {
+                            Text = "5,000 and Over",
+                            Value = "200"
+                        });
+                    }
 
-                <div>@Html.LabelFor(model => model.squareFootage, "Sq. Footage")</div>
-                <div>@Html.DropDownListFor(model => model.squareFootage, listItems, "Select Sq. Footage", new { @name = "squareFootage", @id = "squareFootage", @class = "tot_amount"})</div>
+                    <div>@Html.LabelFor(model => model.squareFootage, "Sq. Footage")</div>
+                    <div>@Html.DropDownListFor(model => model.squareFootage, listItems, "Select Sq. Footage", new { @name = "squareFootage", @id = "squareFootage", @class = "tot_amount" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
+                    <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
+                    <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
+                </div>
             </div>
-            <div class="item">
-                <div>@Html.LabelFor(model => model.numberOfBedrooms, "# of Bedrooms")</div>
-                <div>@Html.TextBoxFor(model => model.numberOfBedrooms, new { @class = "field-width4" })</div>
-            </div>
-            <div class="item">
-                <div>@Html.LabelFor(model => model.numberOfBathrooms, "# of Bathrooms")</div>
-                <div>@Html.TextBoxFor(model => model.numberOfBathrooms, new { @class = "field-width4" })</div>
-            </div>
-        </div>
 
             <div style="font-weight:bold">Type of Cleaning:</div>
             <div class="section">
@@ -161,7 +161,7 @@ else
 
             <div class="section">
                 <div class="item">
-                    <div>@Html.CheckBoxFor(model => model.carpetCleaning, new { @id = "carpetCleaning", @class = "tot_amount"})@Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
+                    <div>@Html.CheckBoxFor(model => model.carpetCleaning, new { @id = "carpetCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.carpetCleaning, "Carpet Cleaning")</div>
                 </div>
                 <div class="item">
                     <div>@Html.CheckBoxFor(model => model.baseboardCleaning, new { @id = "baseboardCleaning", @class = "tot_amount" })@Html.LabelFor(model => model.baseboardCleaning, "Baseboard Cleaning")</div>
@@ -195,6 +195,10 @@ else
                     <button class="button-cancel" id="btnDelete" name="btnSubmit" value="delete"><i class='far fa-trash-alt'></i> Delete</button>
                 }
                 <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+            </div>
+
+            <div class="section">
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="pay"><i class='fa fa-money'></i> Click Here To Pay </button>             
             </div>
         </div>
     }
