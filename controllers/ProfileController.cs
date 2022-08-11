@@ -9,120 +9,6 @@ namespace QuickClean.Controllers
 {
 	public class ProfileController : Controller
 	{
-		public ActionResult Order()
-		{
-			Models.User u = new Models.User();
-			Models.Property e = new Models.Property();
-			u = u.GetUserSession();
-			e.User = u;
-
-			if (e.User.IsAuthenticated)
-			{
-				if (RouteData.Values["id"] == null)
-				{ //add an empty Property
-					e.Start = new DateTime(DateTime.Now.Year + 1, DateTime.Now.Month, DateTime.Now.Day, 13, 0, 0);
-					e.End = new DateTime(DateTime.Now.Year + 1, DateTime.Now.Month, DateTime.Now.Day, 17, 0, 0);
-				}
-				else
-				{ //get the Property
-					long id = Convert.ToInt64(RouteData.Values["id"]);
-					e = e.GetProperty(id);
-				}
-			}
-			return View(e);
-		}
-
-		[HttpPost]
-		public ActionResult Order(HttpPostedFileBase PropertyImage, FormCollection col)
-		{
-			Models.User u = new Models.User();
-			u = u.GetUserSession();
-
-			if (col["btnSubmit"] == "close")
-			{
-				if (col["from"] == null) return RedirectToAction("MyProperties");
-				return RedirectToAction("Index", "Home");
-			}
-
-			if (col["btnSubmit"] == "property-gallery")
-			{
-				return RedirectToAction("PropertyGallery", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
-			}
-
-			if (col["btnSubmit"] == "delete")
-			{
-				long lngID = Convert.ToInt64(RouteData.Values["id"]);
-				return RedirectToAction("DeleteProperty", new { @id = lngID });
-			}
-
-			if (col["btnSubmit"] == "save")
-			{
-
-				Models.Property e = new Models.Property();
-
-				if (RouteData.Values["id"] != null) e.ID = Convert.ToInt64(RouteData.Values["id"]);
-				e.User = u;
-				e.Title = col["Title"];
-				if (col["IsActive"].ToString().Contains("true")) e.IsActive = true; else e.IsActive = false;
-				e.Start = DateTime.Parse(string.Concat(col["Start"].ToString(), " ", col["Start.TimeOfDay"]));
-
-                e.squareFootage = col["squareFootage"];
-                e.numberOfBedrooms = col["numberOfBedrooms"];
-                e.numberOfBathrooms = col["numberOfBathrooms"];
-
-                if (col["standardCleaning"].ToString().Contains("true")) e.standardCleaning = true; else e.standardCleaning = false;
-
-                if (col["carpetCleaning"].ToString().Contains("true")) e.carpetCleaning = true; else e.carpetCleaning = false;
-                if (col["baseboardCleaning"].ToString().Contains("true")) e.baseboardCleaning = true; else e.baseboardCleaning = false;
-                if (col["laundryCleaning"].ToString().Contains("true")) e.laundryCleaning = true; else e.laundryCleaning = false;
-                if (col["dishCleaning"].ToString().Contains("true")) e.dishCleaning = true; else e.dishCleaning = false;
-
-                e.Details = col["Details"];
-
-
-				e.Compensation = col["Compensation"];
-
-				e.Location.Address = new Models.Address();
-				e.Location.Address.Address1 = col["Location.Address.Address1"];
-				e.Location.Address.Address2 = col["Location.Address.Address2"];
-				e.Location.Address.City = col["Location.Address.City"];
-				e.Location.Address.State = col["Location.Address.State"];
-				e.Location.Address.Zip = col["Location.Address.Zip"];
-
-				e.Save();
-
-				if (PropertyImage != null)
-				{
-					e.PropertyImage = new Models.Image();
-					if (col["PropertyImage.ImageID"].ToString() == "")
-					{
-						e.PropertyImage.ImageID = 0;
-					}
-					else
-					{
-						e.PropertyImage.ImageID = Convert.ToInt32(col["PropertyImage.ImageID"]);
-					}
-
-					e.PropertyImage.Primary = true;
-					e.PropertyImage.FileName = Path.GetFileName(PropertyImage.FileName);
-					if (e.PropertyImage.IsImageFile())
-					{
-						e.PropertyImage.Size = PropertyImage.ContentLength;
-						Stream stream = PropertyImage.InputStream;
-						BinaryReader binaryReader = new BinaryReader(stream);
-						e.PropertyImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
-
-						e.UpdatePrimaryImage();
-					}
-				}
-
-				if (e.ID > 0)
-				{
-					return RedirectToAction("Property", new { @id = e.ID });
-				}
-			}
-			return View();
-		}
 
 		public ActionResult Property()
 		{
@@ -162,6 +48,11 @@ namespace QuickClean.Controllers
 			if (col["btnSubmit"] == "property-gallery")
 			{
 				return RedirectToAction("PropertyGallery", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
+			}
+
+			if (col["btnSubmit"] == "pay")
+			{
+				return RedirectToAction("Transaction", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
 			}
 
 			if (col["btnSubmit"] == "delete")
@@ -238,6 +129,42 @@ namespace QuickClean.Controllers
 				}
 			}
 			return View();
+		}
+
+		public ActionResult Transaction()
+		{
+			Models.PropertyContent ec = new Models.PropertyContent();
+			Models.Database db = new Models.Database();
+
+			ec.User = new Models.User();
+			ec.User = ec.User.GetUserSession();
+
+			if (ec.User.IsAuthenticated)
+			{
+				ec.User.Likes = db.GetPropertyLikes(ec.User.UID);
+				ec.User.Ratings = db.GetPropertyRatings(ec.User.UID);
+			}
+
+			long id = Convert.ToInt64(RouteData.Values["id"]);
+			ec.Property = new Models.Property();
+			ec.Property = ec.Property.GetProperty(id);
+
+			return View(ec);
+		}
+
+		[HttpPost]
+		public ActionResult Transaction(FormCollection col)
+		{
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+
+			if (col["btnSubmit"] == "close")
+            {
+				return RedirectToAction("Index");
+			}
+
+			return View();
+			
 		}
 
 		public ActionResult PropertyGallery()
