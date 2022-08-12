@@ -13,6 +13,8 @@ namespace QuickClean.Models {
 		public DateTime End;
 		public User User;
 		public Location Location;
+
+		public int CleanerID;
 		
 
 		public List<Image> Images;
@@ -71,6 +73,25 @@ namespace QuickClean.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public Property GetBooking(long ID)
+		{
+			try
+			{
+				Database db = new Database();
+				List<Property> properties = new List<Property>();
+				if (this.User == null)
+				{
+					properties = db.GetBookings(ID);
+				}
+				else
+				{
+					properties = db.GetBookings(ID, this.User.UID);
+				}
+				return properties[0];
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
 		public Property.ActionTypes Save() {
 			try {
 				Database db = new Database();
@@ -80,6 +101,21 @@ namespace QuickClean.Models {
 				else {
 					this.ActionType = db.UpdateProperty(this);
 				}
+				return this.ActionType;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+	
+		/// ADD CLEANER
+		public Property.ActionTypes SaveCleaner()
+		{
+			try
+			{
+				Database db = new Database();
+				
+				this.ActionType = db.UpdatePropertyCleaner(this);
+		
 				return this.ActionType;
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
