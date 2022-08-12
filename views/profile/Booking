@@ -1,0 +1,153 @@
+
+@model QuickClean.Models.Property
+
+@{
+    ViewBag.Title = string.Concat("Property Details", @Model.Title);
+}
+
+@if (!Model.User.IsAuthenticated)
+{
+    @Html.Partial("NotAuthenticated")
+}
+else
+{
+    @Html.Partial("CleanerUserTabMenu")
+
+
+    using (Html.BeginForm("Booking", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input id="query-string-from" name="query-string-from" type="hidden" value="@Request.QueryString["from"]" />
+        <div id="user-profile-image">
+            @if (Model.PropertyImage != null)
+            {
+                if (Model.PropertyImage.ImageID > 0)
+                {
+                    <div class="user-profile-image-container">
+                        <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+							Model.PropertyImage.FileExtension, ";base64,",
+							Model.PropertyImage.BytesBase64)" />
+                    </div>
+                }
+            }
+        </div>
+        <div class="section">
+            <div class="item">
+                <div style="font-weight:bold">@Html.Label(Model.User.Email, "Contact Email Address")</div>
+                <div>@Html.Label(Model.User.Email, Model.User.Email, new { @readonly = "readonly" })</div>
+            </div>
+        </div>
+
+        <div class="section">
+
+        </div>
+
+        <div class="section">
+            <div style="font-size:40px;font-weight:bold">Listing Details:</div>
+        </div>
+
+        <h3 class="bold">Start Date/Time</h3>
+        <p>@Model.Start</p>
+
+        <div class="section">
+            <div class="item">
+                <div style="font-weight:bold">@Html.Label(Model.Location.Address.FullAddress, "Address")</div>
+                <div>@Html.Label(Model.Location.Address.FullAddress, Model.Location.Address.FullAddress, new { @readonly = "readonly" })</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="item">
+
+                @if (Model.squareFootage == "75")
+                {
+                    <div style="font-weight:bold">@Html.Label(Model.squareFootage, "Sq. Footage")</div>
+                    <div>@Html.Label(Model.squareFootage, "Under 1,500", new { @class = "field-width4", @readonly = "readonly" })</div>
+                }
+                @if (Model.squareFootage == "100")
+                {
+                    <div style="font-weight:bold">@Html.Label(Model.squareFootage, "Sq. Footage")</div>
+                    <div>@Html.Label(Model.squareFootage, "1,500 - 3,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+                }
+                @if (Model.squareFootage == "150")
+                {
+                    <div style="font-weight:bold">@Html.Label(Model.squareFootage, "Sq. Footage")</div>
+                    <div>@Html.Label(Model.squareFootage, "3,000 - 4,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+                }
+                @if (Model.squareFootage == "200")
+                {
+                    <div style="font-weight:bold">@Html.Label(Model.squareFootage, "Sq. Footage")</div>
+                    <div>@Html.Label(Model.squareFootage, "5,000 +", new { @class = "field-width4", @readonly = "readonly" })</div>
+                }
+
+            </div>
+            <div class="item">
+                <div style="font-weight:bold">@Html.Label(Model.numberOfBedrooms, "# of Bedrooms")</div>
+                <div>@Html.Label(Model.numberOfBedrooms, Model.numberOfBedrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+            </div>
+            <div class="item">
+                <div style="font-weight:bold">@Html.Label(Model.numberOfBathrooms, "# of Bathrooms")</div>
+                <div>@Html.Label(Model.numberOfBathrooms, Model.numberOfBathrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+            </div>
+        </div>
+
+
+
+        <div style="font-weight:bold">Type of Cleaning:</div>
+        <div class="section">
+
+            @if (Model.standardCleaning == true)
+            {
+                <div>
+                    <p> Standard Cleaning </p>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <p> Deep Cleaning </p>
+                </div>
+            }
+
+            <div style="font-weight:bold">Extras:</div>
+            <div class="section">
+
+                @if (Model.carpetCleaning == true)
+                {
+                    <div> Carpet Cleaning </div>
+                }
+                @if (Model.baseboardCleaning == true)
+                {
+                    <div> Baseboard Cleaning </div>
+                }
+                @if (Model.laundryCleaning == true)
+                {
+                    <div> Laundry Cleaning </div>
+                }
+                @if (Model.dishCleaning == true)
+                {
+                    <div> Dish Cleaning </div>
+                }
+            </div>
+
+            <div style="font-weight:bold">Additional Details:</div>
+
+            <div class="section">
+                <div class="item">
+                    <div>@Html.Label(Model.Details)</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="item">
+                    <div style="font-weight:bold">@Html.Label(Model.Compensation, "Grand Total")</div>
+                    <div>$ @Html.Label(Model.Compensation, Model.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='fa-check'></i>Cleaning Complete</button>
+        </div>
+    }
+}
+
