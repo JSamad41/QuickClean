@@ -1,25 +1,99 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@model QuickClean.Models.User
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Property Owner Profile Information</h2>
+
+<style>
+</style>
+
+@if (!Model.IsAuthenticated)
+{
+    @Html.Partial("NotAuthenticated")
+}
+else
+{
+    @Html.Partial("UserTabMenu")
+    using (Html.BeginForm("Index", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <p>To make changes to your profile enter your information below and click the Update button.</p>
+
+        <div style="font-weight:bold">Account Type:</div>
+        <div class="section">
+            <div class="item">
+                <div>@Html.RadioButtonFor(model => model.Role, "owner", new { @value = "owner", @name = "Role", @checked = "checked" })@Html.LabelFor(model => model.Role, "Property Owner")</div>
+            </div>
+            <div class="item">
+                <div>@Html.RadioButtonFor(model => model.Role, "cleaner", new { @value = "cleaner", @name = "Role" })@Html.LabelFor(model => model.Role, "Cleaning Professional")</div>
+            </div>
+        </div>
+
+        <div id="user-profile-data">
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.FirstName)</div>
+                    <div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.LastName)</div>
+                    <div>@Html.TextBoxFor(model => model.LastName)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.Address)</div>
+                    <div>@Html.TextBoxFor(model => model.Address)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.City)</div>
+                    <div>@Html.TextBoxFor(model => model.City)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.State)</div>
+                    <div>@Html.TextBoxFor(model => model.State)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.Zip)</div>
+                    <div>@Html.TextBoxFor(model => model.Zip)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.PhoneNumber)</div>
+                    <div>@Html.TextBoxFor(model => model.PhoneNumber)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div>
+                    <div>@Html.LabelFor(model => model.Email)</div>
+                    <div>@Html.TextBoxFor(model => model.Email)</div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.UserID)</div>
+                    <div>@Html.TextBoxFor(model => model.UserID)</div>
+                </div>
+                <div class="item">
+                    <div>@Html.LabelFor(model => model.Password)</div>
+                    <div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
+                </div>
+            </div>
+            <div class="section">
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+            </div>
+        </div>
+    }
 }
 
-<div class="jumbotron">
-    <h2>payment issues</h2>
-    <p class="lead">If your having trouble making the payments through payPal, Please contact Paypal seprately.
-    Thank you for choosing QuickClean LLC.</p>
-    <p><a href="https://www.paypal.com/us/smarthelp/home" class="btn btn-primary btn-lg">Click here for PayPal help &raquo;</a></p>
-</div>
-
-<div class="jumbotron1">
-    <h2>Request Refunds</h2>
-    <p class="lead">
-        Customers, If you want to ask for refunds, Please click the link below. Thank you!
-    </p>
-    <p><a href="https://www.paypal.com/myaccount/transfer/homepage/request" class="btn btn-primary btn-lg">Click here to request refunds. &raquo;</a></p>
-</div>
-
-<div class="jumbotron2">
-    <h2>General questions</h2>
-    <p class="lead">
-        Customers, If you have any questions or concern, Please contact QuickClean Customer service representative.
-    </p>
-</div>
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'index');
+    });
+</script>
