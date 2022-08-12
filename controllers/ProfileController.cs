@@ -131,6 +131,48 @@ namespace QuickClean.Controllers
 			return View();
 		}
 
+		public ActionResult Booking()
+		{
+			Models.User u = new Models.User();
+			Models.Property e = new Models.Property();
+			u = u.GetUserSession();
+			e.User = u;
+
+			if (e.User.IsAuthenticated)
+			{
+				if (RouteData.Values["id"] == null)
+				{ //add an empty Property
+					e.Start = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, 13, 0, 0);
+					e.End = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, 17, 0, 0);
+				}
+				else
+				{ //get the Property
+					long id = Convert.ToInt64(RouteData.Values["id"]);
+					e = e.GetBooking(id);
+				}
+			}
+			return View(e);
+		}
+
+		[HttpPost]
+		public ActionResult Booking(HttpPostedFileBase PropertyImage, FormCollection col)
+		{
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+
+			if (col["btnSubmit"] == "close")
+			{
+				if (col["from"] == null) return RedirectToAction("MyProperties");
+				return RedirectToAction("Index", "Home");
+			}
+
+			if (col["btnSubmit"] == "property-gallery")
+			{
+				return RedirectToAction("PropertyGallery", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
+			}
+			return View();
+		}
+
 		public ActionResult Transaction()
 		{
 			Models.PropertyContent ec = new Models.PropertyContent();
@@ -292,6 +334,15 @@ namespace QuickClean.Controllers
 			u = u.GetUserSession();
 			if (u.IsAuthenticated)
 				u.Properties = u.GetProperties();
+			return View(u);
+		}
+
+		public ActionResult MyBookings()
+		{
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+			if (u.IsAuthenticated)
+				u.Properties = u.GetBookings();
 			return View(u);
 		}
 
