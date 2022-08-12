@@ -78,7 +78,13 @@ namespace QuickClean.Controllers
                 e.Details = col["Details"];
 				e.Compensation = col["Compensation"];
 
-                if (col["standardCleaning"].ToString().Contains("true")) e.standardCleaning = true; else e.standardCleaning = false;
+				e.OwnerEmail = col["OwnerEmail"];
+				e.CleanerName = col["CleanerName"];
+				e.CleanerEmail = col["CleanerEmail"];
+
+
+
+				if (col["standardCleaning"].ToString().Contains("true")) e.standardCleaning = true; else e.standardCleaning = false;
 
                 if (col["carpetCleaning"].ToString().Contains("true")) e.carpetCleaning = true; else e.carpetCleaning = false;
                 if (col["baseboardCleaning"].ToString().Contains("true")) e.baseboardCleaning = true; else e.baseboardCleaning = false;
