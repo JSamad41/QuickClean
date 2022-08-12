@@ -142,6 +142,10 @@ namespace QuickClean.Models
                         e.Details = (string)dr["Details"];
                         e.Compensation = (string)dr["Compensation"];
 
+                        //e.OwnerEmail = (string)dr["OwnerEmail"];
+                        //e.CleanerName = (string)dr["CleanerName"];
+                        //e.CleanerEmail = (string)dr["CleanerEmail"];
+
                         e.Location = new Location();
 
                         e.Location.Address = new Address();
@@ -305,6 +309,7 @@ namespace QuickClean.Models
                 SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
                 SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
                 SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@owner_email", e.User.Email, SqlDbType.NVarChar);
 
                 if (e.standardCleaning)
                     SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
@@ -452,6 +457,7 @@ namespace QuickClean.Models
 
                         e.Details = (string)dr["Details"];
                         e.Compensation = (string)dr["Compensation"];
+                        e.OwnerEmail = (string)dr["OwnerEmail"];
 
                         e.Location = new Location();
 
@@ -531,6 +537,10 @@ namespace QuickClean.Models
                         e.Details = (string)dr["Details"];
                         e.Compensation = (string)dr["Compensation"];
 
+                        e.CleanerName = (string)dr["CleanerName"];
+                        e.CleanerEmail = (string)dr["CleanerEmail"];
+                        e.OwnerEmail = (string)dr["OwnerEmail"];
+
                         e.Location = new Location();
 
                         e.Location.Address = new Address();
@@ -607,6 +617,7 @@ namespace QuickClean.Models
                 SetParameter(ref cm, "@numberOfBathrooms", e.numberOfBathrooms, SqlDbType.NVarChar);
                 SetParameter(ref cm, "@details", e.Details, SqlDbType.NVarChar);
                 SetParameter(ref cm, "@compensation", e.Compensation, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@owner_email", e.User.Email, SqlDbType.NVarChar);
 
                 if (e.standardCleaning)
                     SetParameter(ref cm, "@standardCleaning", "Y", SqlDbType.Char);
@@ -667,7 +678,9 @@ namespace QuickClean.Models
 
                 SetParameter(ref cm, "@id", e.ID, SqlDbType.BigInt);
                 SetParameter(ref cm, "@cleaner_uid", e.User.UID, SqlDbType.BigInt);
-              
+                SetParameter(ref cm, "@cleaner_name", e.User.FirstName, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@cleaner_email", e.User.Email, SqlDbType.NVarChar);
+
 
                 SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
