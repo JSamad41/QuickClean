@@ -15,7 +15,11 @@ namespace QuickClean.Models {
 		public Location Location;
 
 		public int CleanerID;
-		
+		public string CleanerName;
+		public string CleanerEmail;
+
+		public string OwnerEmail;
+
 
 		public List<Image> Images;
 		public Image PropertyImage;
