@@ -1,11 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace QuickClean.Controllers
 {
 	public class HomeController : Controller
 	{
+
+		public ActionResult PublicGallery()
+		{
+			Models.Property e = new Models.Property();
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+			e.User = u;
+
+				Models.Database db = new Models.Database();
+				long lngID = Convert.ToInt64(RouteData.Values["id"]);
+				e = e.GetProperty(lngID);
+				e.Images = db.GetPropertyImages(lngID);
+
+			return View(e);
+		}
+
+		[HttpPost]
+		public ActionResult PublicGallery(IEnumerable<HttpPostedFileBase> files)
+		{
+			Models.Property e = new Models.Property();
+			e.User = new Models.User();
+			e.User = e.User.GetUserSession();
+			e.ID = Convert.ToInt64(RouteData.Values["id"]);
+			foreach (var file in files)
+			{
+				e.AddPropertyImage(file);
+			}
+			return Json("file(s) uploaded successfully");
+		}
 
 		public ActionResult Properties()
 		{
@@ -69,8 +102,41 @@ namespace QuickClean.Controllers
 		[HttpPost]
 		public ActionResult Property(FormCollection col)
 		{
+			Models.User u = new Models.User();
+			u = u.GetUserSession();
+
+			if (col["btnSubmit"] == "close")
+			{
+				return RedirectToAction("Index");
+			}
+
+			if (col["btnSubmit"] == "property-gallery")
+			{
+				return RedirectToAction("PublicGallery", "Home", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
+			}
+
+			if (col["btnSubmit"] == "update")
+			{
+
+				Models.Property e = new Models.Property();
+
+				if (RouteData.Values["id"] != null) e.ID = Convert.ToInt64(RouteData.Values["id"]);
+				e.User = u;
+		
+				e.SaveCleaner();
+
+				if (e.ID > 0)
+				{
+					return RedirectToAction("Property", new { @id = e.ID });
+				}
+
+                
+            }
+			return View();
+
+
 			//close button
-			return RedirectToAction("Index");
+			//return RedirectToAction("Index");
 		}
 
 		[HttpPost]
