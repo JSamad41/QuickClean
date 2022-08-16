@@ -1,0 +1,106 @@
+
+@model QuickClean.Models.Property
+
+@{
+    ViewBag.Title = string.Concat("Property Gallery: ", @Model.Title);
+}
+
+<style>
+    .user-image-container img {
+        height: 100px;
+        position: absolute;
+    }
+</style>
+
+
+    @if (Model.Images == null || Model.Images.Count == 0)
+    {
+        <p>There are no images in the gallery for this property.</p>
+    }
+    else
+    {
+        <p>Below are the gallery images for this property.</p>
+        foreach (QuickClean.Models.Image i in Model.Images)
+        {
+
+            <div id="image-@i.ImageID" class="user-image-container">
+                <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+				i.FileExtension, ";base64,", i.BytesBase64)" />
+            </div>
+        }
+    }
+
+
+<script>
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'properties');
+
+    });
+</script>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.filedrop.js"></script>
+    <script type="text/javascript">
+		$(function () {
+			var fileCount = 0, maximumFileCount = 10, maximumFileSize = 5;
+			$("#image-drop-container").filedrop({
+				url: '@Url.Action("PropertyGallery")',
+				allowedfiletypes: ["image/jpeg", "image/png", "image/gif"],
+				allowedfileextensions: [".JPG", ".jpg", ".JPEG", ".jpeg", ".png", ".PNG", ".gif", ".GIF"],
+				paramname: "files",
+				maxfiles: maximumFileCount,
+				maxfilesize: maximumFileSize,
+				dragOver: function () {
+					$("#image-drop-container").addClass("active-drop");
+				},
+				dragLeave: function () {
+					$("#image-drop-container").removeClass("active-drop");
+				},
+				drop: function () {
+					$("#image-drop-container").removeClass("active-drop");
+				},
+				afterAll: function (e) {
+					$("#image-drop-container").html(fileCount.toString().concat(" file(s) uploaded."));
+					window.location.href = '@Url.Action("PropertyGallery")';
+					fileCount = 0;
+				},
+				uploadFinished: function (i, file, response, time) {
+					fileCount++;
+					if (fileCount == 1)
+						$("#upload-message").html(fileCount.toString().concat(" file uploaded."));
+					else
+						$("#upload-message").html(fileCount.toString().concat(" files uploaded."));
+				},
+				error: function (err, file) {
+					switch (err) {
+						case 'BrowserNotSupported':
+							alert('This browser does not support HTML5 drag and drop.')
+							break;
+						case 'TooManyFiles':
+							// user uploaded more than 'maxfiles'
+							alert("Maximum number of files to add at one time is ".concat(maxFileCount).concat("."));
+							break;
+						case 'FileTooLarge':
+							// program encountered a file whose size is greater than 'maxfilesize'
+							// FileTooLarge also has access to the file which was too large
+							// use file.name to reference the filename of the culprit file
+							alert("File Too Large");
+							break;
+						case 'FileTypeNotAllowed':
+							// The file type is not in the specified list 'allowedfiletypes'
+							alert("File Type Not Allowed!!!");
+							break;
+						case 'FileExtensionNotAllowed':
+							// The file extension is not in the specified list 'allowedfileextensions'
+							alert('File Extension Not Allowed');
+							break;
+						default:
+							break;
+					}
+				},
+
+			})
+		})
+    </script>
+}
