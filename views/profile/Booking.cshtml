@@ -145,9 +145,19 @@ else
             </div>
         </div>
 
-        <div class="section">
-            <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='fa-check'></i>Cleaning Complete</button>
-        </div>
+
+        if (Model.IsComplete == true)
+        {
+            <div class="section">
+                <div>You have completed this cleaning.  Owner will be notified and payment will be sent by 9:00 PM on the day of service.  Thank you!</div>
+            </div>
+        }
+        else
+        {
+            <div class="section">
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="completecleaning"><i class='fa-check'></i>Cleaning Complete</button>
+            </div>
+        }
     }
 }
 
