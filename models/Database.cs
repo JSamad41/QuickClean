@@ -142,9 +142,11 @@ namespace QuickClean.Models
                         e.Details = (string)dr["Details"];
                         e.Compensation = (string)dr["Compensation"];
 
-                        //e.OwnerEmail = (string)dr["OwnerEmail"];
+                        e.OwnerEmail = (string)dr["OwnerEmail"];
                         //e.CleanerName = (string)dr["CleanerName"];
                         //e.CleanerEmail = (string)dr["CleanerEmail"];
+
+                        //if (dr["IsComplete"].ToString() == "N") e.dishCleaning = false;
 
                         e.Location = new Location();
 
@@ -422,8 +424,7 @@ namespace QuickClean.Models
 
                 if (ID > 0) SetParameter(ref da, "@id", ID, SqlDbType.BigInt);
                 if (UID > 0) SetParameter(ref da, "@uid", UID, SqlDbType.BigInt);
-                //if (LocationTitle != "") SetParameter(ref da, "@location_title", LocationTitle, SqlDbType.NVarChar);
-
+                
                 try
                 {
                     da.Fill(ds);
@@ -455,9 +456,22 @@ namespace QuickClean.Models
                         if (dr["laundryCleaning"].ToString() == "N") e.laundryCleaning = false; else e.laundryCleaning = true;
                         if (dr["dishCleaning"].ToString() == "N") e.dishCleaning = false; else e.dishCleaning = true;
 
+
+                      
                         e.Details = (string)dr["Details"];
                         e.Compensation = (string)dr["Compensation"];
                         e.OwnerEmail = (string)dr["OwnerEmail"];
+
+                        // if (dr["IsComplete"] != null) e.IsComplete = true;
+                        //if (dr["CleanerUID"] != null) e.CleanerID = (int)dr["CleanerUID"];
+                        //if (dr["CleanerName"] != null) e.CleanerName = (string)dr["CleanerName"];
+
+                        //e.CleanerName = (string)dr["CleanerName"];
+
+                        e.CleanerID = (long)dr["CleanerUID"];
+                        e.CleanerEmail = (string)dr["CleanerEmail"];
+
+                        if (dr["IsComplete"].ToString() == "Y") e.IsComplete = true; else e.IsComplete = false;
 
                         e.Location = new Location();
 
@@ -540,6 +554,8 @@ namespace QuickClean.Models
                         e.CleanerName = (string)dr["CleanerName"];
                         e.CleanerEmail = (string)dr["CleanerEmail"];
                         e.OwnerEmail = (string)dr["OwnerEmail"];
+
+                        if (dr["IsComplete"].ToString() == "Y") e.IsComplete = true; else e.IsComplete = false;
 
                         e.Location = new Location();
 
@@ -680,6 +696,40 @@ namespace QuickClean.Models
                 SetParameter(ref cm, "@cleaner_uid", e.User.UID, SqlDbType.BigInt);
                 SetParameter(ref cm, "@cleaner_name", e.User.FirstName, SqlDbType.NVarChar);
                 SetParameter(ref cm, "@cleaner_email", e.User.Email, SqlDbType.NVarChar);
+
+
+                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
+
+                cm.ExecuteReader();
+
+                intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
+                CloseDBConnection(ref cn);
+
+                switch (intReturnValue)
+                {
+                    case 1: //new updated
+                        return Property.ActionTypes.UpdateSuccessful;
+                    default:
+                        return Property.ActionTypes.Unknown;
+                }
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public Property.ActionTypes UpdateIsComplete(Property e)
+        {
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+                SqlCommand cm = new SqlCommand("UPDATE_ISCOMPLETE", cn);
+                int intReturnValue = -1;
+
+                SetParameter(ref cm, "@id", e.ID, SqlDbType.BigInt);
+
+                
+                SetParameter(ref cm, "@is_complete", "Y", SqlDbType.Char);
+            
 
 
                 SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
