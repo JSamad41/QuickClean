@@ -20,7 +20,7 @@ else
 
     <h2>@strHeader</h2>
     @Html.Partial("UserTabMenu")
-    <p>@strText</p>
+
     if (Model.ActionType == QuickClean.Models.Property.ActionTypes.RequiredFieldsMissing)
     {
         <div id="content-locked">
@@ -31,6 +31,34 @@ else
 
     using (Html.BeginForm("Property", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+
+        if (Model.CleanerID >0 && Model.ID != 0)
+        {
+
+            <div class="section"></div>
+
+            <div class="section">
+
+                @if (Model.IsComplete == true)
+                {
+                    <p style="font-weight:bold;font-size:20px">Your property cleaning has been completed! Please make payment by 9:00 PM on day of cleaning.  Thank you!</p>
+                    
+                }
+                else
+                {
+                    <p style="font-weight:bold;font-size:20px">A cleaning professional has accepted your listing!</p>              
+                }
+                <div class="item">
+                    <button class="button-action" id="btnUpdate" name="btnSubmit" value="pay"><i class='fa fa-money'></i> Click Here To Pay </button>
+                </div>
+            </div>
+        }
+
+        <div class="section"></div>
+        <div class="section"></div>
+
+        <p>@strText</p>
+
         <input id="query-string-from" name="query-string-from" type="hidden" value="@Request.QueryString["from"]" />
         <div id="user-profile-image">
             @if (Model.PropertyImage != null)
@@ -65,6 +93,7 @@ else
                     </div>
                 </div>
             </div>
+
             <div class="item">
                 <div>&nbsp;</div>
                 <div>@Html.CheckBoxFor(model => model.IsActive) @Html.LabelFor(model => model.IsActive, "Is Active")</div>
@@ -197,9 +226,9 @@ else
                 <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
             </div>
 
-            <div class="section">
-                <button class="button-action" id="btnUpdate" name="btnSubmit" value="pay"><i class='fa fa-money'></i> Click Here To Pay </button>             
-            </div>
+            @*<div class="section">
+                    <button class="button-action" id="btnUpdate" name="btnSubmit" value="pay"><i class='fa fa-money'></i> Click Here To Pay </button>
+                </div>*@
         </div>
     }
 }
