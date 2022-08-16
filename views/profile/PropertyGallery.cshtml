@@ -1,61 +1,81 @@
 @model QuickClean.Models.Property
 
 @{
-	ViewBag.Title = string.Concat("Property Gallery: ", @Model.Title);
+    ViewBag.Title = string.Concat("Property Gallery: ", @Model.Title);
 }
 <h2>@ViewBag.Title</h2>
 <style>
-	.user-image-container img {
-		height: 100px;
-		position: absolute;
-	}
+    .user-image-container img {
+        height: 100px;
+        position: absolute;
+    }
 </style>
 
-@if (!Model.User.IsAuthenticated) {
-	@Html.Partial("NotAuthenticated")
-}
-else {
-	@Html.Partial("UserTabMenu")
+@if (!Model.User.IsAuthenticated)
+{
+    if (Model.Images == null || Model.Images.Count == 0)
+    {
+        <p>There are no images in the gallery for this property.</p>
+    }
+    else
+    {
+        <p>Below are the gallery images for this property.</p>
+        foreach (QuickClean.Models.Image i in Model.Images)
+        {
 
-	<div id="image-drop-container">
-		<div id="drop-message" style="">Drop your files here.</div>
-		<div id="upload-message"></div>
-	</div>
-	if (Model.Images == null || Model.Images.Count == 0) {
-		<p>Drop your files in the box above.</p>
-	}
-	else {
-		<p>Below are the gallery images for this property.</p>
-		foreach (QuickClean.Models.Image i in Model.Images) {
-			<div id="image-@i.ImageID" class="user-image-container">
-				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
-					i.FileExtension, ";base64,",
-					i.BytesBase64)" />
-				<div class="image-delete-button" title="Delete this image">
-					<a href="javascript:void(0)" onclick="deleteImageAjax('property', @Model.User.UID, @i.ImageID);">
-						<i class="fal fa-trash-alt"></i>
-					</a>
-				</div>
-			</div>
-		}
-	}
+            <div id="image-@i.ImageID" class="user-image-container">
+                <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+				i.FileExtension, ";base64,", i.BytesBase64)" />
+            </div>
+        }
+    }
+}
+else
+{
+    @Html.Partial("UserTabMenu")
+
+    <div id="image-drop-container">
+        <div id="drop-message" style="">Drop your files here.</div>
+        <div id="upload-message"></div>
+    </div>
+    if (Model.Images == null || Model.Images.Count == 0)
+    {
+        <p> Drop your files in the box above.</p>
+    }
+    else
+    {
+        <p>Below are the gallery images for this property.</p>
+        foreach (QuickClean.Models.Image i in Model.Images)
+        {
+            <div id="image-@i.ImageID" class="user-image-container">
+                <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+                        i.FileExtension, ";base64,",
+                        i.BytesBase64)" />
+                <div class="image-delete-button" title="Delete this image">
+                    <a href="javascript:void(0)" onclick="deleteImageAjax('event', @Model.User.UID, @i.ImageID);">
+                        <i class="fal fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    }
 }
 
 <script>
-	$(document).ready(function () {
-		SetActiveMenus('profile', 'properties');
+    $(document).ready(function () {
+        SetActiveMenus('profile', 'properties');
 
-	});
+    });
 </script>
 
 @section Scripts {
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="~/Scripts/jquery.filedrop.js"></script>
-	<script type="text/javascript">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.filedrop.js"></script>
+    <script type="text/javascript">
 		$(function () {
 			var fileCount = 0, maximumFileCount = 10, maximumFileSize = 5;
 			$("#image-drop-container").filedrop({
-				url: '@Url.Action("ProfileGallery")',
+				url: '@Url.Action("PropertyGallery")',
 				allowedfiletypes: ["image/jpeg", "image/png", "image/gif"],
 				allowedfileextensions: [".JPG", ".jpg", ".JPEG", ".jpeg", ".png", ".PNG", ".gif", ".GIF"],
 				paramname: "files",
@@ -112,5 +132,5 @@ else {
 
 			})
 		})
-	</script>
+    </script>
 }
