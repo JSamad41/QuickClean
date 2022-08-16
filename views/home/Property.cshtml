@@ -112,7 +112,7 @@
         </div>
 
         <div class="section">
-            
+
         </div>
 
         <div class="section">
@@ -221,7 +221,14 @@
 
         if (Model.User.Role == "cleaner")
         {
-            <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Accept Cleaning Job</button>
+            if (Model.Property.CleanerID >0)
+            {
+                <div>This property listing has already been accepted by a cleaning professional.</div>
+            }
+            else
+            {
+                <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Accept Cleaning Job</button>
+            }
         }
     }
 </div>
