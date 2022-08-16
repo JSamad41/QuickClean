@@ -9,70 +9,128 @@
     @Styles.Render("~/Content/css")
 
     <style>
-
         .topnav {
-            overflow: hidden;
-            background-color: #bfe5d9;
+            padding: 0;
+            margin: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
         }
 
-            .topnav a {
-                float: right;
-                color: #333;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+
+        nav {
+            background: #AF51F8;
+            height: 60px;
+            width: 100%;
+        }
+
+        label.logo {
+            color: white;
+            font-size: 35px;
+            line-height: 60px;
+            padding: 0 100px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            float: right;
+            margin-right: 30px;
+        }
+
+            nav ul li {
+                display: inline-block;
+                line-height: 80px;
+                margin: 0 5px;
             }
 
-                .topnav a:hover {
-                    background-color: #5aa17f;
+                nav ul li a {
                     color: white;
+                    font-size: 17px;
+                    padding: 7px 13px;
+                    border-radius: 3px;
+                    text-transform: uppercase;
                 }
 
-                .topnav a.active {
-                    background-color: #04AA6D;
-                    color: white;
-                }
+        .topnav a {
+            text-align: center;
+            padding: 14px 14px;
+            text-decoration: none;
+            font-size: 17px;
+        }
 
-        .topname {
-            overflow: hidden;
-            background-color: #bfe5d9;
+            .topnav a:hover {
+                background: #a32efc;
+                transition: .5s;
+            }
+
+            .topnav a.active {
+                background: #a32efc;
+                transition: .5s;
+            }
+
+        .checkbtn {
+            font-size: 30px;
+            color: white;
+            float: right;
+            line-height: 80px;
+            margin-right: 40px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #check {
+            display: none;
         }
     </style>
+
 
 </head>
 <body>
 
-    @{
-		QuickClean.Models.User uCurrent = new QuickClean.Models.User();
-		uCurrent = uCurrent.GetUserSession();
-    }
+    @{ QuickClean.Models.User uCurrent = new QuickClean.Models.User();
+        uCurrent = uCurrent.GetUserSession(); }
 
     <div class="topnav">
+        <nav>
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo">QuickClean</label>
 
-        <a href="~/AboutUs/Index" title="For More Information">More Information</a>
+            <ul>
+                <a href="~/Home/Properties" title="Home">Home</a>
+                @if (uCurrent.IsAuthenticated)
+                { // already logged in
+                    <a href="~/Profile/SignOut" title="Sign Out">Sign Out</a>
 
-
-        @if (uCurrent.IsAuthenticated)
-        { // already logged in
-            <a href="~/Profile/SignOut" title="Sign Out">Sign Out</a>
-            <a href="~/Profile/Index" title="Profile">Profile</a>
-        }
-        else
-        { // not logged in
-            <a href="~/Profile/SignUp" title="Sign Up">Sign Up</a>
-            <a href="~/Profile/SignIn" title="Sign In">Login</a>
-        }
-
-        <a href="~/Home/Index" title="Home">Home</a>
-
-        <a style="padding: 5px 5px;float: left; font-size: 35px; font-weight: 700; font-family: 'Copperplate Gothic'">Quick Clean</a>
-
+                    if (uCurrent.Role == "cleaner")
+                    {
+                            <a href="~/Profile/CleanerIndex" title="CleanerProfile">Profile</a> 
+                    }
+                    else
+                    {
+                            <a href="~/Profile/Index" title="Profile">Profile</a> 
+                    }
+                }
+                else
+                { // not logged in
+                    <a href="~/Profile/SignUp" title="Sign Up">Sign Up</a>
+                    <a href="~/Profile/SignIn" title="Sign In">Login</a>
+                }
+                    <a href="~/AboutUs/Index" title="For More Information"> More</a>
+                
+            </ul>
+        </nav>
+        <section></section>
     </div>
 
-        <div id="workspace">
-            @RenderBody()
-        </div>
-        @RenderSection("Scripts", required: false)
+    <div id="workspace">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
