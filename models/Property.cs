@@ -14,7 +14,7 @@ namespace QuickClean.Models {
 		public User User;
 		public Location Location;
 
-		public int CleanerID;
+		public long CleanerID;
 		public string CleanerName;
 		public string CleanerEmail;
 
@@ -28,6 +28,8 @@ namespace QuickClean.Models {
 		public bool IsActive = true;
 		public int AverageRating = 0;
 		public int TotalLikes = 0;
+
+		public bool IsComplete = false;
 
 		//added cleaning options
 		public bool carpetCleaning = false;
@@ -120,6 +122,19 @@ namespace QuickClean.Models {
 				
 				this.ActionType = db.UpdatePropertyCleaner(this);
 		
+				return this.ActionType;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public Property.ActionTypes UpdateComplete()
+		{
+			try
+			{
+				Database db = new Database();
+
+				this.ActionType = db.UpdateIsComplete(this);
+
 				return this.ActionType;
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
