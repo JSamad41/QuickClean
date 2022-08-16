@@ -6,6 +6,7 @@
 <style>
     .user-image-container {
         height: 225px;
+        width: 95%
     }
 
     .property-thumbnail {
@@ -16,6 +17,13 @@
         font-weight: bold;
         font-size: 0.8em;
         margin-bottom: 0.3em;
+    }
+
+    .property-image {
+        min-width: 700px;
+        width: 75%;
+        margin: 0.5px;
+        height: 400px;
     }
 
     .property-date {
@@ -71,23 +79,26 @@ else
 {
     <div>
         @foreach (QuickClean.Models.Property e in Model.Properties)
-         {
-            <div id="image-@e.ID" class="user-image-container">
-                @if (e.PropertyImage != null)
-                {
-                    <a href="@Url.Action("Property", new { id = e.ID })">
-                        <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
-								e.PropertyImage.FileExtension, ";base64,",
-								e.PropertyImage.BytesBase64)" />
-                    </a>
-                 }
+        {
+
+            <div id="image-@e.ID" class="item" style="padding-bottom:3em">
+                <div style="width: 100%">
+                    @if (e.PropertyImage != null)
+                    {
+                        <a href="@Url.Action("Property", new { id = e.ID })">
+                            <img class="property-image" src="@string.Concat("data:Image/",
+                                e.PropertyImage.FileExtension, ";base64,",
+                                e.PropertyImage.BytesBase64)" />
+                        </a>
+                    }
+                </div>
                 <div class="property-thumbnail">
                     <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Location.Address.Address1</a></div>
                     <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
                 </div>
             </div>
-                   
-         }
+
+        }
     </div>
 }
 <script>
