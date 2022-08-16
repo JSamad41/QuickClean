@@ -82,6 +82,8 @@ namespace QuickClean.Controllers
 				e.CleanerName = col["CleanerName"];
 				e.CleanerEmail = col["CleanerEmail"];
 
+				//if (col["IsComplete"].ToString().Contains("true")) e.IsComplete = true; else e.IsComplete = false;
+
 
 
 				if (col["standardCleaning"].ToString().Contains("true")) e.standardCleaning = true; else e.standardCleaning = false;
@@ -176,6 +178,22 @@ namespace QuickClean.Controllers
 			{
 				return RedirectToAction("PropertyGallery", new { @id = Convert.ToInt64(RouteData.Values["id"]) });
 			}
+
+			if (col["btnSubmit"] == "completecleaning")
+			{
+				Models.Property e = new Models.Property();
+
+				if (RouteData.Values["id"] != null) e.ID = Convert.ToInt64(RouteData.Values["id"]);
+				e.User = u;
+
+				e.UpdateComplete();
+
+				if (e.ID > 0)
+				{
+					return RedirectToAction("Booking", new { @id = e.ID });
+				}
+
+			}
 			return View();
 		}
 
@@ -208,7 +226,12 @@ namespace QuickClean.Controllers
 
 			if (col["btnSubmit"] == "close")
             {
-				return RedirectToAction("Index");
+					return RedirectToAction("Index", "Profile");			
+			}
+
+			if (col["btnSubmit"] == "paypal")
+			{
+				return RedirectToAction("http://www.paypal.com");
 			}
 
 			return View();
