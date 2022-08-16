@@ -16,6 +16,7 @@ namespace QuickClean.Controllers
             u.FirstName = "Amanda";
             u.LastName = "Wittwer";
             u.Email = "alwittwer@cincinnatistate.edu";
+            u.Role = "owner";
 
             return View(u);
         }
@@ -57,6 +58,7 @@ namespace QuickClean.Controllers
             u.FirstName = "Amanda";
             u.LastName = "Wittwer";
             u.Email = "alwittwer@cincinnatistate.edu";
+            u.Role = "owner";
 
             return View(u);
         }
