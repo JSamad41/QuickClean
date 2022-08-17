@@ -6,6 +6,7 @@ using System.IO;
 
 namespace QuickClean.Models
 {
+
 	public class User
 	{
 		public long UID = 0;
@@ -66,6 +67,16 @@ namespace QuickClean.Models
             }
 			catch(Exception ex) { throw new Exception(ex.Message); }
         }
+
+		public List<Property> GetBookings(long ID = 0)
+		{
+			try
+			{
+				Database db = new Database();
+				return db.GetBookings(ID, this.UID);
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
 		public sbyte AddGalleryImage(HttpPostedFileBase f)
 		{
