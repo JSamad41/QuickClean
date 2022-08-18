@@ -1,16 +1,15 @@
-<div id="user-tab-menu" class="tab">
-    <button id="profile-properties" class="tablinks" onclick="location.href = '@Url.Action("MyBookings", "Profile")';"><i class="fas fa-calendar-alt"></i> My Bookings</button>
-    @{
-        string strController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
-        string strView = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
-        long lngID = 0;
-        if (HttpContext.Current.Request.RequestContext.RouteData.Values["id"] != null)
-        {
-            lngID = Convert.ToInt64(HttpContext.Current.Request.RequestContext.RouteData.Values["id"]);
-        }
-    }
+<div style="border-radius: 12px;" id="user-tab-menu" class="tab">
+	<button style="border-radius: 12px;" id="profile-properties" class="tablinks" onclick="location.href = '@Url.Action("MyBookings", "Profile")';"><i class="fas fa-calendar-alt"></i> My Bookings</button>
+	@{
+		string strController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+		string strView = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString();
+		long lngID = 0;
+		if (HttpContext.Current.Request.RequestContext.RouteData.Values["id"] != null) {
+			lngID = Convert.ToInt64(HttpContext.Current.Request.RequestContext.RouteData.Values["id"]);
+		}
+	}
 
-    <button id="profile-cleanerindex" class="tablinks" onclick="location.href = '@Url.Action("CleanerIndex", "Profile")';"><i class="fas fa-user-circle"></i> Profile</button>
+	<button style="border-radius: 12px;" id="profile-cleanerindex" class="tablinks" onclick="location.href = '@Url.Action("CleanerIndex", "Profile")';"><i class="fas fa-user-circle"></i> Profile</button>
 
-    <button id="profile-home" class="tablinks" onclick="location.href = '@Url.Action("Properties", "Home")';"><i class="fa fa-star"></i>Available Listings</button>
+	<button style="border-radius: 12px;" id="profile-home" class="tablinks" onclick="location.href = '@Url.Action("Properties", "Home")';"><i class="fa fa-star"></i>Available Listings</button>
 </div>
