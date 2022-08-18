@@ -4,45 +4,36 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace QuickClean.Controllers
-{
-    public class AboutUsController : Controller
-    {
+namespace QuickClean.Controllers {
+    public class AboutUsController : Controller {
         // GET: AboutUs
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             Models.User u = new Models.User();
 
-            u.FirstName = "Amanda";
-            u.LastName = "Wittwer";
-            u.Email = "alwittwer@cincinnatistate.edu";
+            u.FirstName = "Nick";
+            u.LastName = "Kohlman";
+            u.Email = "jnkohlman@cincinnatistate.edu";
             u.Role = "owner";
 
             return View(u);
         }
 
         [HttpPost]
-        public ActionResult Index(FormCollection col)
-        {
-            try
-            {
+        public ActionResult Index(FormCollection col) {
+            try {
                 Models.User u = new Models.User();
 
-                if (col["btnSubmit"] == "more")
-                { //more button pressed
+                if (col["btnSubmit"] == "more") { //more button pressed
                     return RedirectToAction("More");
                 }
-                else if (col["btnClose"] == "close")
-                { //Close button pressed
-                    return RedirectToAction("Index", "Home");
+                else if (col["btnClose"] == "close") { //Close button pressed
+                    return RedirectToAction("Properties", "Home");
                 }
-                else
-                {
+                else {
                     return View(u);
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 Models.User u = new Models.User();
                 return View(u);
             }
@@ -50,22 +41,20 @@ namespace QuickClean.Controllers
         }
 
         // GET: More
-        public ActionResult More()
-        {
+        public ActionResult More() {
 
             Models.User u = new Models.User();
 
-            u.FirstName = "Amanda";
-            u.LastName = "Wittwer";
-            u.Email = "alwittwer@cincinnatistate.edu";
+            u.FirstName = "Nick";
+            u.LastName = "Kohlman";
+            u.Email = "jnkohlman@cincinnatistate.edu";
             u.Role = "owner";
 
             return View(u);
         }
 
         [HttpPost]
-        public ActionResult More(FormCollection col)
-        {
+        public ActionResult More(FormCollection col) {
             return RedirectToAction("Index");
 
         }
