@@ -1,0 +1,32 @@
+@{
+	ViewBag.Title = "Contact Us";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<p>If you would like to reach us, please click the button below!</p>
+
+<div class="section">
+	<form action="https://sdahal6.github.io/SendEmailDemo">
+		<button style="border-radius: 12px;" id="btnSubmit" name="btnSubmit" type="submit" class="button-action" value="Contact QuickClean" <i class='fa fa-times'></i>Email Us Here</button>
+	</form>
+</div>
+
+@using (Html.BeginForm(FormMethod.Post)) {
+
+
+
+	<div class="section">
+		<button style="border-radius: 12px;" class="button-cancel" id="btnClose" name="btnClose" value="close"><i class='fa fa-times'></i> Close</button>
+	</div>
+
+
+}
+
+
+
+<script>
+	$(document).ready(function () {
+		SetActiveMenus('aboutus');
+	});
+</script>
