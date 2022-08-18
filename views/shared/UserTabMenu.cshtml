@@ -1,4 +1,4 @@
-<div id="user-tab-menu" class="tab">
+<div style=" border-radius: 12px;" id="user-tab-menu" class="tab">
 	<button id="profile-properties" class="tablinks" onclick="location.href = '@Url.Action("MyProperties", "Profile")';"><i class="fas fa-calendar-alt"></i> My Property Listings</button>
 	@{
 		string strController = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
@@ -27,3 +27,11 @@
 
 	<button style = "border-radius: 12px;" id="profile-index" class="tablinks" onclick="location.href = '@Url.Action("Index", "Profile")';"><i class="fas fa-user-circle"></i> Profile</button>
 </div>
+
+<style>
+	body {
+		background: linear-gradient(120deg, #51F8AF, #AF51F8);
+		height: 116vh;
+
+	}
+</style>
