@@ -1,236 +1,220 @@
 @model QuickClean.Models.PropertyContent
 
 @{
-    ViewBag.Title = @Model.Property.Title;
+	ViewBag.Title = @Model.Property.Title;
 }
 <style>
-    .mycanvas-follow {
-        color: #4CAF50;
-    }
+	.mycanvas-follow {
+		color: #4CAF50;
+	}
 
-    .like-link:hover {
-        cursor: pointer;
-    }
+	.like-link:hover {
+		cursor: pointer;
+	}
 
-    .like-link {
-        text-decoration: none;
-        margin-right: 0.75em;
-    }
+	.like-link {
+		text-decoration: none;
+		margin-right: 0.75em;
+	}
 
-    .rate-star:hover {
-        cursor: pointer;
-    }
+	.rate-star:hover {
+		cursor: pointer;
+	}
 
-    .bold {
-        font-weight: bold;
-    }
+	.bold {
+		font-weight: bold;
+	}
 
-    #report-ellipsis {
-        vertical-align: middle;
-        margin-left: 1em;
-    }
+	#report-ellipsis {
+		vertical-align: middle;
+		margin-left: 1em;
+	}
 
-    #report-panel {
-        display: none;
-        margin-top: 1.5em;
-        margin-bottom: 0.5em;
-        padding-top: 0.25em;
-        padding-bottom: 0.25em;
-        padding-left: 0.75em;
-        padding-right: 0.75em;
-        background-color: lightyellow;
-        border: 1px solid darkgrey;
-        -webkit-border-radius: 0.3em;
-        -moz-border-radius: 0.3em;
-        border-radius: 0.3em;
-    }
+	#report-panel {
+		display: none;
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+		padding-top: 0.25em;
+		padding-bottom: 0.25em;
+		padding-left: 0.75em;
+		padding-right: 0.75em;
+		background-color: lightyellow;
+		border: 1px solid darkgrey;
+		-webkit-border-radius: 0.3em;
+		-moz-border-radius: 0.3em;
+		border-radius: 0.3em;
+	}
 
-    #report-close {
-        color: black;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        padding-top: 0.25em;
-        margin-left: 0.25em;
-    }
+	#report-close {
+		color: black;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		padding-top: 0.25em;
+		margin-left: 0.25em;
+	}
 
-        #report-close:hover, #report-ellipsis:hover {
-            color: red;
-            text-decoration: none;
-            cursor: pointer;
-        }
+	#report-close:hover, #report-ellipsis:hover {
+		color: red;
+		text-decoration: none;
+		cursor: pointer;
+	}
 
-    #report-submitting, #report-submitted, #report-failed {
-        display: none;
-    }
+	#report-submitting, #report-submitted, #report-failed {
+		display: none;
+	}
 
-    #report-failed {
-        color: red;
-    }
+	#report-failed {
+		color: red;
+	}
 
-    .margin-right {
-        margin-right: 0.25em;
-    }
+	.margin-right {
+		margin-right: 0.25em;
+	}
 
-    #fa-report-icon {
-        color: red;
-    }
+	#fa-report-icon {
+		color: red;
+	}
 </style>
 
 <h2>@ViewBag.Title</h2>
 
 <div id="user-profile-image">
-    @if (Model.Property.PropertyImage != null)
-    {
-        if (Model.Property.PropertyImage.ImageID > 0)
-        {
-            <div class="user-profile-image-container">
-                <img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+	@if (Model.Property.PropertyImage != null) {
+		if (Model.Property.PropertyImage.ImageID > 0) {
+			<div class="user-profile-image-container">
+				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 							Model.Property.PropertyImage.FileExtension, ";base64,",
 							Model.Property.PropertyImage.BytesBase64)" />
-            </div>
-        }
-    }
+			</div>
+		}
+	}
 </div>
 
 <div id="user-profile-data">
-    @using (Html.BeginForm(FormMethod.Post))
-    {
+	@using (Html.BeginForm(FormMethod.Post)) {
 
 
-        <div class="section">
-            <button class="button-action" id="btnGallery" name="btnSubmit" value="property-gallery"><i class='fa fa-times'></i>Property Gallery</button>
-            <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
+		<div class="section">
+			<button style="border-radius: 12px;" class="button-action" id="btnGallery" name="btnSubmit" value="property-gallery"><i class='fa fa-times'></i>Property Gallery</button>
+			<button style="border-radius: 12px;" class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-times'></i> Close</button>
 
-        </div>
+		</div>
 
-        <div class="section">
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.User.Email, "Contact Email Address")</div>
-                <div>@Html.Label(Model.Property.User.Email, Model.Property.User.Email, new { @readonly = "readonly" })</div>
-            </div>
-        </div>
+		<div class="section">
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.User.Email, "Contact Email Address")</div>
+				<div>@Html.Label(Model.Property.User.Email, Model.Property.User.Email, new { @readonly = "readonly" })</div>
+			</div>
+		</div>
 
-        <div class="section">
+		<div class="section">
 
-        </div>
+		</div>
 
-        <div class="section">
-            <div style="font-size:40px;font-weight:bold">Listing Details:</div>
-        </div>
+		<div class="section">
+			<div style="font-size:40px;font-weight:bold">Listing Details:</div>
+		</div>
 
-        <h3 class="bold">Start Date/Time</h3>
-        <p>@Model.Property.Start</p>
+		<h3 class="bold">Start Date/Time</h3>
+		<p>@Model.Property.Start</p>
 
-        <div class="section">
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.Location.Address.FullAddress, "Address")</div>
-                <div>@Html.Label(Model.Property.Location.Address.FullAddress, Model.Property.Location.Address.FullAddress, new { @readonly = "readonly" })</div>
-            </div>
-        </div>
+		<div class="section">
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.Location.Address.FullAddress, "Address")</div>
+				<div>@Html.Label(Model.Property.Location.Address.FullAddress, Model.Property.Location.Address.FullAddress, new { @readonly = "readonly" })</div>
+			</div>
+		</div>
 
-        <div class="section">
-            <div class="item">
+		<div class="section">
+			<div class="item">
 
-                @if (Model.Property.squareFootage == "75")
-                {
-                    <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
-                    <div>@Html.Label(Model.Property.squareFootage, "Under 1,500", new { @class = "field-width4", @readonly = "readonly" })</div>
-                }
-                @if (Model.Property.squareFootage == "100")
-                {
-                    <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
-                    <div>@Html.Label(Model.Property.squareFootage, "1,500 - 3,000", new { @class = "field-width4", @readonly = "readonly" })</div>
-                }
-                @if (Model.Property.squareFootage == "150")
-                {
-                    <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
-                    <div>@Html.Label(Model.Property.squareFootage, "3,000 - 4,000", new { @class = "field-width4", @readonly = "readonly" })</div>
-                }
-                @if (Model.Property.squareFootage == "200")
-                {
-                    <div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
-                    <div>@Html.Label(Model.Property.squareFootage, "5,000 +", new { @class = "field-width4", @readonly = "readonly" })</div>
-                }
+				@if (Model.Property.squareFootage == "75") {
+					<div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+					<div>@Html.Label(Model.Property.squareFootage, "Under 1,500", new { @class = "field-width4", @readonly = "readonly" })</div>
+				}
+				@if (Model.Property.squareFootage == "100") {
+					<div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+					<div>@Html.Label(Model.Property.squareFootage, "1,500 - 3,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+				}
+				@if (Model.Property.squareFootage == "150") {
+					<div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+					<div>@Html.Label(Model.Property.squareFootage, "3,000 - 4,000", new { @class = "field-width4", @readonly = "readonly" })</div>
+				}
+				@if (Model.Property.squareFootage == "200") {
+					<div style="font-weight:bold">@Html.Label(Model.Property.squareFootage, "Sq. Footage")</div>
+					<div>@Html.Label(Model.Property.squareFootage, "5,000 +", new { @class = "field-width4", @readonly = "readonly" })</div>
+				}
 
-            </div>
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.numberOfBedrooms, "# of Bedrooms")</div>
-                <div>@Html.Label(Model.Property.numberOfBedrooms, Model.Property.numberOfBedrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
-            </div>
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.numberOfBathrooms, "# of Bathrooms")</div>
-                <div>@Html.Label(Model.Property.numberOfBathrooms, Model.Property.numberOfBathrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
-            </div>
-        </div>
+			</div>
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.numberOfBedrooms, "# of Bedrooms")</div>
+				<div>@Html.Label(Model.Property.numberOfBedrooms, Model.Property.numberOfBedrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+			</div>
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.numberOfBathrooms, "# of Bathrooms")</div>
+				<div>@Html.Label(Model.Property.numberOfBathrooms, Model.Property.numberOfBathrooms, new { @class = "field-width4", @readonly = "readonly" })</div>
+			</div>
+		</div>
 
 
 
-        <div style="font-weight:bold">Type of Cleaning:</div>
-        <div class="section">
+		<div style="font-weight:bold">Type of Cleaning:</div>
+		<div class="section">
 
-            @if (Model.Property.standardCleaning == true)
-            {
-                <div>
-                    <p> Standard Cleaning </p>
-                </div>
-            }
-            else
-            {
-                <div>
-                    <p> Deep Cleaning </p>
-                </div>
-            }
+			@if (Model.Property.standardCleaning == true) {
+				<div>
+					<p> Standard Cleaning </p>
+				</div>
+			}
+			else {
+				<div>
+					<p> Deep Cleaning </p>
+				</div>
+			}
 
-            <div style="font-weight:bold">Extras:</div>
-            <div class="section">
+			<div style="font-weight:bold">Extras:</div>
+			<div class="section">
 
-                @if (Model.Property.carpetCleaning == true)
-                {
-                    <div> Carpet Cleaning </div>
-                }
-                @if (Model.Property.baseboardCleaning == true)
-                {
-                    <div> Baseboard Cleaning </div>
-                }
-                @if (Model.Property.laundryCleaning == true)
-                {
-                    <div> Laundry Cleaning </div>
-                }
-                @if (Model.Property.dishCleaning == true)
-                {
-                    <div> Dish Cleaning </div>
-                }
-            </div>
+				@if (Model.Property.carpetCleaning == true) {
+					<div> Carpet Cleaning </div>
+				}
+				@if (Model.Property.baseboardCleaning == true) {
+					<div> Baseboard Cleaning </div>
+				}
+				@if (Model.Property.laundryCleaning == true) {
+					<div> Laundry Cleaning </div>
+				}
+				@if (Model.Property.dishCleaning == true) {
+					<div> Dish Cleaning </div>
+				}
+			</div>
 
-            <div style="font-weight:bold">Additional Details:</div>
+			<div style="font-weight:bold">Additional Details:</div>
 
-            <div class="section">
-                <div class="item">
-                    <div>@Html.Label(Model.Property.Details)</div>
-                </div>
-            </div>
+			<div class="section">
+				<div class="item">
+					<div>@Html.Label(Model.Property.Details)</div>
+				</div>
+			</div>
 
-            <div class="section">
-                <div class="item">
-                    <div style="font-weight:bold">@Html.Label(Model.Property.Compensation, "Grand Total")</div>
-                    <div>$ @Html.Label(Model.Property.Compensation, Model.Property.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
-                </div>
-            </div>
-        </div>
+			<div class="section">
+				<div class="item">
+					<div style="font-weight:bold">@Html.Label(Model.Property.Compensation, "Grand Total")</div>
+					<div>$ @Html.Label(Model.Property.Compensation, Model.Property.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
+				</div>
+			</div>
+		</div>
 
-        if (Model.User.Role == "cleaner")
-        {
-            if (Model.Property.CleanerID >0)
-            {
-                <div>This property listing has already been accepted by a cleaning professional.</div>
-            }
-            else
-            {
-                <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Accept Cleaning Job</button>
-            }
-        }
-    }
+		if (Model.User.Role == "cleaner") {
+			if (Model.Property.CleanerID > 0) {
+				<div>This property listing has already been accepted by a cleaning professional.</div>
+			}
+			else {
+				<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Accept Cleaning Job</button>
+			}
+		}
+	}
 </div>
 
 
