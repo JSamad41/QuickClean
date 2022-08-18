@@ -1,55 +1,48 @@
 @model QuickClean.Models.PropertyContent
 
 @{
-    ViewBag.Title = string.Concat("Transaction for: ");
+	ViewBag.Title = string.Concat("Transaction for: ");
 }
 <h2>Complete Transaction</h2>
 
 <div id="user-profile-data">
-    @using (Html.BeginForm(FormMethod.Post))
-    {
+	@using (Html.BeginForm(FormMethod.Post)) {
 
-        <div class="section">
+		<div class="section">
 
-        </div>
+		</div>
 
-        <div class="section">
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.CleanerEmail, "Cleaner contact information:")</div>
-                <div> @Html.Label(Model.Property.CleanerEmail, Model.Property.CleanerEmail, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
-            </div>
-        </div>
+		<div class="section">
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.CleanerEmail, "Cleaner contact information:")</div>
+				<div> @Html.Label(Model.Property.CleanerEmail, Model.Property.CleanerEmail, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
+			</div>
+		</div>
 
-        <div class="section">
-            <div class="item">
-                <div style="font-weight:bold">@Html.Label(Model.Property.Compensation, "Grand Total")</div>
-                <div>$ @Html.Label(Model.Property.Compensation, Model.Property.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
-            </div>
-        </div>
+		<div class="section">
+			<div class="item">
+				<div style="font-weight:bold">@Html.Label(Model.Property.Compensation, "Grand Total")</div>
+				<div>$ @Html.Label(Model.Property.Compensation, Model.Property.Compensation, new { @size = "7", @id = "compensation", @readonly = "readonly" })</div>
+			</div>
+		</div>
 
+		//variable that holds the grand total is         Model.Property.Compensation
 
-        //variable that holds the grand total is         Model.Property.Compensation
+		<div class="section">
 
+			<button style = "border-radius: 12px;" class="button-cancel" id="btnPayPal" name="btnSubmit" value="paypal"><i class="fa fa-paypal">  Click here to make payment using PayPal</i></button>
 
+		</div>
 
-        <div class="section">
+		<div class="section">
 
-            <button class="button-cancel" id="btnPayPal" name="btnSubmit" value="paypal"><i class="fa fa-paypal">  Click here to make payment using PayPal</i></button>
+		</div>
 
-        </div>
+		<div class="section">
 
-        <div class="section">
+			<button style = "border-radius: 12px;" class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-mail-reply'></i>Back to User Profile</button>
 
-        </div>
+		</div>
 
-        <div class="section">
-
-            <button class="button-cancel" id="btnClose" name="btnSubmit" value="close"><i class='fa fa-mail-reply'></i>Back to User Profile</button>
-
-        </div>
-
-    }
+	}
 </div>
-
-
-
