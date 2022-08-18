@@ -30,63 +30,63 @@ else {
 			<div class="section">
 				<div class="item">
 					<div>@Html.LabelFor(model => model.UserID)</div>
-					<div>@Html.TextBoxFor(model => model.UserID)</div>
+					<div>@Html.TextBoxFor(model => model.UserID, new { @style = "border-radius: 8px;" })</div>
 				</div>
 				<div class="item">
 					<div>@Html.LabelFor(model => model.Password)</div>
-					<div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
+					<div>@Html.TextBoxFor(model => model.Password, new { @style = "border-radius: 8px;", type = "password" })</div>
 				</div>
 			</div>
 
 			<div class="section">
 				<div class="item">
 					<div>@Html.LabelFor(model => model.FirstName)</div>
-					<div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div>
+					<div>@Html.TextBoxFor(model => model.FirstName, new { @style = "border-radius: 8px;", @autofocus = "autofocus" })</div>
 				</div>
 				<div class="item">
 					<div>@Html.LabelFor(model => model.LastName)</div>
-					<div>@Html.TextBoxFor(model => model.LastName)</div>
+					<div>@Html.TextBoxFor(model => model.LastName, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.Address)</div>
-					<div>@Html.TextBoxFor(model => model.Address)</div>
+					<div>@Html.TextBoxFor(model => model.Address, new {@style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.City)</div>
-					<div>@Html.TextBoxFor(model => model.City)</div>
+					<div>@Html.TextBoxFor(model => model.City, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.State)</div>
-					<div>@Html.TextBoxFor(model => model.State)</div>
+					<div>@Html.TextBoxFor(model => model.State, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.Zip)</div>
-					<div>@Html.TextBoxFor(model => model.Zip)</div>
+					<div>@Html.TextBoxFor(model => model.Zip, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.PhoneNumber)</div>
-					<div>@Html.TextBoxFor(model => model.PhoneNumber)</div>
+					<div>@Html.TextBoxFor(model => model.PhoneNumber, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 			<div class="section">
 				<div>
 					<div>@Html.LabelFor(model => model.Email)</div>
-					<div>@Html.TextBoxFor(model => model.Email)</div>
+					<div>@Html.TextBoxFor(model => model.Email, new { @style = "border-radius: 8px;" })</div>
 				</div>
 			</div>
 
 			<div class="section">
-				<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+				<button style="border-radius: 12px;" class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
 			</div>
 		</div>
 	}
