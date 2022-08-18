@@ -1,100 +1,99 @@
 @model QuickClean.Models.User
 @{
-    ViewBag.Title = "CleanerIndex";
+	ViewBag.Title = "CleanerIndex";
 }
 <h2>Cleaner Profile Information</h2>
 
 <style>
 </style>
 
-@if (!Model.IsAuthenticated)
-{
-    @Html.Partial("NotAuthenticated")
+@if (!Model.IsAuthenticated) {
+	@Html.Partial("NotAuthenticated")
 }
-else
-{
-    @Html.Partial("CleanerUserTabMenu")
-    using (Html.BeginForm("CleanerIndex", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <p>To make changes to your profile enter your information below and click the Update button.</p>
+else {
+	@Html.Partial("CleanerUserTabMenu")
+	using (Html.BeginForm("CleanerIndex", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+		<p>To make changes to your profile enter your information below and click the Update button.</p>
 
-        <div style="font-weight:bold">Account Type:</div>
-        <div class="section">
-            <div class="item">
-                <div>@Html.RadioButtonFor(model => model.Role, "owner", new { @value = "owner", @name = "Role" })@Html.LabelFor(model => model.Role, "Property Owner")</div>
-            </div>
-            <div class="item">
-                <div>@Html.RadioButtonFor(model => model.Role, "cleaner", new { @value = "cleaner", @name = "Role", @checked="checked" })@Html.LabelFor(model => model.Role, "Cleaning Professional")</div>
-            </div>
-        </div>
+		<div style="font-weight:bold">Account Type:</div>
+		<div class="section">
+			<div class="item">
+				<div>@Html.RadioButtonFor(model => model.Role, "owner", new { @value = "owner", @name = "Role" })@Html.LabelFor(model => model.Role, "Property Owner")</div>
+			</div>
+			<div class="item">
+				<div>@Html.RadioButtonFor(model => model.Role, "cleaner", new { @value = "cleaner", @name = "Role", @checked = "checked" })@Html.LabelFor(model => model.Role, "Cleaning Professional")</div>
+			</div>
+		</div>
 
-        <div id="user-profile-data">
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.FirstName)</div>
-                    <div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.LastName)</div>
-                    <div>@Html.TextBoxFor(model => model.LastName)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Address)</div>
-                    <div>@Html.TextBoxFor(model => model.Address)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.City)</div>
-                    <div>@Html.TextBoxFor(model => model.City)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.State)</div>
-                    <div>@Html.TextBoxFor(model => model.State)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Zip)</div>
-                    <div>@Html.TextBoxFor(model => model.Zip)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.PhoneNumber)</div>
-                    <div>@Html.TextBoxFor(model => model.PhoneNumber)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div>
-                    <div>@Html.LabelFor(model => model.Email)</div>
-                    <div>@Html.TextBoxFor(model => model.Email)</div>
-                </div>
-            </div>
-            <div class="section">
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.UserID)</div>
-                    <div>@Html.TextBoxFor(model => model.UserID)</div>
-                </div>
-                <div class="item">
-                    <div>@Html.LabelFor(model => model.Password)</div>
-                    <div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
-                </div>
-            </div>
-            <div class="section">
-                <button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
-            </div>
-        </div>
-    }
+		<div id="user-profile-data">
+
+			<div class="section">
+				<div class="item">
+					<div>@Html.LabelFor(model => model.UserID)</div>
+					<div>@Html.TextBoxFor(model => model.UserID)</div>
+				</div>
+				<div class="item">
+					<div>@Html.LabelFor(model => model.Password)</div>
+					<div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<div class="item">
+					<div>@Html.LabelFor(model => model.FirstName)</div>
+					<div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div>
+				</div>
+				<div class="item">
+					<div>@Html.LabelFor(model => model.LastName)</div>
+					<div>@Html.TextBoxFor(model => model.LastName)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.Address)</div>
+					<div>@Html.TextBoxFor(model => model.Address)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.City)</div>
+					<div>@Html.TextBoxFor(model => model.City)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.State)</div>
+					<div>@Html.TextBoxFor(model => model.State)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.Zip)</div>
+					<div>@Html.TextBoxFor(model => model.Zip)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.PhoneNumber)</div>
+					<div>@Html.TextBoxFor(model => model.PhoneNumber)</div>
+				</div>
+			</div>
+			<div class="section">
+				<div>
+					<div>@Html.LabelFor(model => model.Email)</div>
+					<div>@Html.TextBoxFor(model => model.Email)</div>
+				</div>
+			</div>
+
+			<div class="section">
+				<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+			</div>
+		</div>
+	}
 }
 
 <script>
-    $(document).ready(function () {
-        SetActiveMenus('profile', 'index');
-    });
+	$(document).ready(function () {
+		SetActiveMenus('profile', 'index');
+	});
 </script>
-
