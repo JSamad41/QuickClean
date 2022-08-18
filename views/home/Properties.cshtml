@@ -1,109 +1,109 @@
 @model QuickClean.Models.HomeContent
 
 @{
-    ViewBag.Title = "Current Properties ";
+	ViewBag.Title = "Current Properties ";
 }
 <style>
-    .user-image-container {
-        height: 225px;
-        width: 95%
-    }
+	.user-image-container {
+		height: 225px;
+		width: 95%
+	}
 
-    .property-thumbnail {
-        margin: 0.25em;
-    }
+	.property-thumbnail {
+		margin: 0.25em;
+	}
 
-    .property-link {
-        font-weight: bold;
-        font-size: 0.8em;
-        margin-bottom: 0.3em;
-    }
+	.property-link {
+		font-weight: bold;
+		font-size: 0.8em;
+		margin-bottom: 0.3em;
+	}
 
-    .property-image {
-        min-width: 700px;
-        width: 75%;
-        margin: 0.5px;
-        height: 400px;
-    }
+	.property-image {
+		min-width: 700px;
+		width: 75%;
+		margin: 0.5px;
+		height: 400px;
+	}
 
-    .property-date {
-        font-size: 0.8em;
-        margin-bottom: 0.3em;
-    }
+	.property-date {
+		font-size: 0.8em;
+		margin-bottom: 0.3em;
+	}
 
-    .in-active {
-        background-color: lightgrey;
-    }
+	.in-active {
+		background-color: lightgrey;
+	}
 
-    .like {
-        color: #4CAF50;
-    }
+	.like {
+		color: #4CAF50;
+	}
 
-    .mycanvas-follow {
-        color: #4CAF50;
-    }
+	.mycanvas-follow {
+		color: #4CAF50;
+	}
 
-    .mycanvas-following {
-        color: #4CAF50;
-    }
+	.mycanvas-following {
+		color: #4CAF50;
+	}
 
-    QuickClean {
-        color: #4CAF50;
-    }
+	QuickClean {
+		color: #4CAF50;
+	}
 
-    .like-link:hover {
-        cursor: pointer;
-    }
+	.like-link:hover {
+		cursor: pointer;
+	}
 
-    .like-link {
-        text-decoration: none;
-        margin-right: 0.75em;
-    }
+	.like-link {
+		text-decoration: none;
+		margin-right: 0.75em;
+	}
 
-    .disabled-spacing {
-        margin-right: 0.75em;
-        font-size: 0.8em;
-    }
+	.disabled-spacing {
+		margin-right: 0.75em;
+		font-size: 0.8em;
+	}
 
-    .your-item {
-        color: darkgrey
-    }
+	.your-item {
+		color: darkgrey
+	}
+
+	body {
+		background: linear-gradient(120deg, #51F8AF, #AF51F8);
+		height: auto;
+	}
 </style>
 
 <h2>@ViewBag.Title</h2>
-@if (Model.Properties.Count == 0)
-{
-    <p>No properties listed at this time.</p>
+@if (Model.Properties.Count == 0) {
+	<p>No properties listed at this time.</p>
 }
-else
-{
-    <div>
-        @foreach (QuickClean.Models.Property e in Model.Properties)
-        {
+else {
+	<div>
+		@foreach (QuickClean.Models.Property e in Model.Properties) {
 
-            <div id="image-@e.ID" class="item" style="padding-bottom:3em">
-                <div style="width: 100%">
-                    @if (e.PropertyImage != null)
-                    {
-                        <a href="@Url.Action("Property", new { id = e.ID })">
-                            <img class="property-image" src="@string.Concat("data:Image/",
+			<div id="image-@e.ID" class="item" style="padding-bottom:3em">
+				<div style="width: 100%">
+					@if (e.PropertyImage != null) {
+						<a href="@Url.Action("Property", new { id = e.ID })">
+							<img class="property-image" src="@string.Concat("data:Image/",
                                 e.PropertyImage.FileExtension, ";base64,",
                                 e.PropertyImage.BytesBase64)" />
-                        </a>
-                    }
-                </div>
-                <div class="property-thumbnail">
-                    <div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Location.Address.Address1</a></div>
-                    <div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
-                </div>
-            </div>
+						</a>
+					}
+				</div>
+				<div class="property-thumbnail">
+					<div class="property-link"><a href="@Url.Action("Property", new { id = e.ID })">@e.Location.Address.Address1</a></div>
+					<div class="property-date">@e.Start.DayOfWeek @e.Start.ToShortDateString()</div>
+				</div>
+			</div>
 
-        }
-    </div>
+		}
+	</div>
 }
 <script>
-    $(document).ready(function () {
-        SetActiveMenus('home');
-    });
+	$(document).ready(function () {
+		SetActiveMenus('home');
+	});
 </script>
-
