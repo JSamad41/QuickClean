@@ -26,6 +26,9 @@ namespace QuickClean.Controllers {
                 if (col["btnSubmit"] == "more") { //more button pressed
                     return RedirectToAction("More");
                 }
+                else if (col["btnSubmit"] == "contactus") { // Contact Us btn Pushed
+                    return RedirectToAction("ContactUs");
+                }
                 else if (col["btnClose"] == "close") { //Close button pressed
                     return RedirectToAction("Properties", "Home");
                 }
@@ -58,5 +61,27 @@ namespace QuickClean.Controllers {
             return RedirectToAction("Index");
 
         }
+
+        // GET: ContactUs
+        public ActionResult ContactUs() {
+
+            Models.User u = new Models.User();
+
+            u.FirstName = "Nick";
+            u.LastName = "Kohlman";
+            u.Email = "jnkohlman@cincinnatistate.edu";
+            u.Role = "owner";
+
+            return View(u);
+        }
+
+        [HttpPost]
+        public ActionResult ContactUs(FormCollection col) {
+            return RedirectToAction("Index");
+
+        }
+
+
     }
+
 }
