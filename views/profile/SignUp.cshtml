@@ -11,6 +11,7 @@
 		height: 100vh;
 		overflow: hidden;
 	}
+	
 </style>
 
 <p>Enter your information and click the Sign-Up button to sign up.</p>
@@ -51,40 +52,40 @@
 	<div class="section">
 		<div class="item">
 			<div>@Html.LabelFor(model => model.UserID)</div>
-			<div>@Html.TextBoxFor(model => model.UserID, new { @autofocus = "autofocus" })</div>
+			<div>@Html.TextBoxFor(model => model.UserID, new { @style = "border-radius: 8px;", @autofocus = "autofocus" })</div>
 		</div>
 	</div>
 
 	<div class="section">
 		<div class="item">
 			<div>@Html.LabelFor(model => model.FirstName)</div>
-			<div>@Html.TextBoxFor(model => model.FirstName)</div>
+			<div>@Html.TextBoxFor(model => model.FirstName, new { @style = "border-radius: 8px;" })</div>
 		</div>
 	</div>
 
 	<div class="section">
 		<div class="item">
 			<div>@Html.LabelFor(model => model.LastName)</div>
-			<div>@Html.TextBoxFor(model => model.LastName)</div>
+			<div>@Html.TextBoxFor(model => model.LastName, new { @style = "border-radius: 8px;" })</div>
 		</div>
 	</div>
 
 	<div class="section">
 		<div class="item">
 			<div>@Html.LabelFor(model => model.Email)</div>
-			<div>@Html.TextBoxFor(model => model.Email)</div>
+			<div>@Html.TextBoxFor(model => model.Email, new { @style = "border-radius: 8px;" })</div>
 		</div>
 	</div>
 
 	<div class="section">
 		<div class="item">
 			<div>@Html.LabelFor(model => model.Password)</div>
-			<div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
+			<div>@Html.TextBoxFor(model => model.Password, new { @style = "border-radius: 8px;", type = "password" })</div>
 		</div>
 	</div>
 
 	<div>
-		<button id="btnSignUp" name="btnSubmit" value="signup" class="button-action"><i class="fas fa-user-plus"></i> Sign-Up</button>
+		<button style = "border-radius: 12px;" id="btnSignUp" name="btnSubmit" value="signup" class="button-action"><i class="fas fa-user-plus"></i> Sign-Up</button>
 	</div>
 }
 <script>
